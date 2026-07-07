@@ -7,7 +7,7 @@ redirect_from:
   - /about.html
 ---
 
-I'm **Erfan Taatizadeh**, a Postdoctoral Scholar in Biomedical Engineering and Radiology at the **University of California, Davis**, working with Dr. Emilie Roncali. I develop physics-informed neural networks (PINNs) and digital-twin models of hepatic arterial hemodynamics to improve treatment planning for **Y-90 radioembolization**, a targeted therapy for liver cancer.
+I'm **Erfan Taatizadeh**, a Postdoctoral Scholar in Biomedical Engineering and Radiology at the **University of California, Davis**. I develop physics-informed neural networks (PINNs) and digital-twin models of hepatic arterial hemodynamics to improve treatment planning for **Y-90 radioembolization**, a targeted therapy for liver cancer.
 
 My work sits at the intersection of computational physics and scientific machine learning. Over the past seven years I have built multiphysics models in **COMSOL** and trained neural networks and operators (**PINNs, DeepONets, GINOT**) with **PyTorch, DeepXDE, and NVIDIA PhysicsNeMo** — validating them against finite-element simulation and laboratory experiments. Before UC Davis I earned a PhD in Biomedical Engineering at the **University of British Columbia**, where I modeled and fabricated conducting-polymer actuators for tactile feedback, and a MASc in Mechanical Engineering on acoustofluidic devices for exosome isolation.
 

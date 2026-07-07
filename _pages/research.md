@@ -8,7 +8,7 @@ My research develops physics-based and machine-learning models that make enginee
 
 Physics-informed machine learning for liver-cancer therapy
 ======
-*Postdoctoral research · UC Davis (Biomedical Engineering & Radiology), with Dr. Emilie Roncali*
+*Postdoctoral research · UC Davis (Biomedical Engineering & Radiology)*
 
 Yttrium-90 (Y-90) radioembolization treats liver tumors by delivering radioactive microspheres through the hepatic arteries. How well it works depends on where blood flow carries those microspheres — which is patient-specific and hard to predict. I build **physics-informed neural networks (PINNs)** that solve the Navier–Stokes equations for blood flow directly on patient-specific hepatic-artery geometries, validated against COMSOL CFD. The predicted flow split then feeds a dosimetry pipeline that converts microsphere transport into a three-dimensional absorbed-dose map (Gy).
 
