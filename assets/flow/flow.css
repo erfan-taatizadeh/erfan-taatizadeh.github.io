@@ -240,7 +240,7 @@ a.card:hover .more i{transform:translateX(4px)}
 .skill{display:inline-flex;align-items:center;gap:9px;padding:9px 13px;border:1px solid var(--line);border-radius:12px;background:var(--card-2);font-size:14px;color:var(--text);transition:border-color .2s,transform .2s}
 .skill:hover{border-color:var(--teal);transform:translateY(-2px)}
 .skill i{font-size:18px;width:20px;text-align:center;color:var(--text-2)}
-[data-theme='dark'] .skill i.devicon-pandas-original.colored,[data-theme='dark'] .skill i.devicon-matplotlib-plain.colored{color:#c7d2e3}
+[data-theme='dark'] .skill i.devicon-pandas-plain.colored,[data-theme='dark'] .skill i.devicon-matplotlib-plain.colored{color:#c7d2e3}
 
 /* CV */
 .cv-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px}
@@ -305,7 +305,7 @@ a.card:hover .more i{transform:translateX(4px)}
 }
 @media (max-width:1020px){
   .menu-btn{display:grid}
-  .links{position:absolute;top:var(--nav-h);left:0;right:0;flex-direction:column;align-items:stretch;gap:2px;padding:10px 20px 22px;background:color-mix(in srgb,var(--bg) 97%,transparent);border-bottom:1px solid var(--line);transform:translateY(-8px);opacity:0;visibility:hidden;transition:opacity .25s,transform .25s,visibility .25s}
+  .links{position:absolute;top:var(--nav-h);left:0;right:0;flex-direction:column;align-items:stretch;gap:2px;padding:10px 20px 22px;background:var(--bg);border-bottom:1px solid var(--line);box-shadow:0 28px 50px -24px rgba(0,0,0,.55);max-height:calc(100vh - var(--nav-h));overflow-y:auto;transform:translateY(-8px);opacity:0;visibility:hidden;transition:opacity .25s,transform .25s,visibility .25s}
   .links.open{opacity:1;transform:none;visibility:visible}
   .links a{font-size:17px;padding:13px 12px;border-radius:12px}
   .links a.on::after{left:12px;right:auto;width:22px;bottom:8px}
