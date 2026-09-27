@@ -1,0 +1,88 @@
+---
+layout: flow
+title: "Research"
+permalink: /research/
+description: "Research by Erfan Taatizadeh: physics-informed neural networks for liver cancer therapy, geometry-aware neural operators, conducting-polymer actuators, acoustofluidics, and optical modeling."
+---
+<section class="page-head wrap">
+  <p class="eyebrow reveal">Research</p>
+  <h1 class="h1 reveal">Physics, simulation, and machine learning for medicine</h1>
+  <p class="lead reveal">I develop physics-based and machine-learning models that make engineering and medical systems faster to simulate, easier to understand, and possible to optimize. The common thread is coupling multiphysics finite-element simulation with modern scientific machine learning, so expensive simulations become fast surrogates for design and clinical decisions.</p>
+</section>
+
+<section class="wrap features">
+  <article class="feature" id="pinns">
+    <div class="feature-art reveal"><canvas class="art" data-art="streamlines" data-seed="13" aria-hidden="true"></canvas></div>
+    <div class="reveal">
+      <p class="meta">Postdoctoral research · UC Davis</p>
+      <h2>Physics-informed ML for liver cancer therapy</h2>
+      <p>Yttrium-90 (Y-90) radioembolization treats liver tumors by delivering radioactive microspheres through the hepatic arteries. How well it works depends on where blood flow carries those microspheres, which is patient-specific and hard to predict.</p>
+      <p>I build physics-informed neural networks that solve the Navier–Stokes equations on patient-specific hepatic-artery geometries, validated against COMSOL CFD. The predicted flow split feeds a dosimetry pipeline that turns microsphere transport into a 3D absorbed-dose map.</p>
+      <div class="tags"><span class="tag">PINNs</span><span class="tag">NVIDIA PhysicsNeMo</span><span class="tag">COMSOL</span><span class="tag">Y-90</span></div>
+    </div>
+  </article>
+
+  <article class="feature" id="operators">
+    <div class="feature-art reveal"><canvas class="art" data-art="operator" data-seed="5" aria-hidden="true"></canvas></div>
+    <div class="reveal">
+      <p class="meta">Postdoctoral research · UC Davis</p>
+      <h2>Geometry-aware neural operators</h2>
+      <p>To make this practical, I train geometry-aware neural operators: a GINOT, DeepONet-style surrogate built on NVIDIA PhysicsNeMo that predicts flow and pressure for a new vessel geometry in seconds rather than hours.</p>
+      <p>The trained operator powers an interactive digital-twin app: load a vessel geometry, set the inlet velocity, and explore the predicted 3D flow immediately.</p>
+      <div class="tags"><span class="tag">Neural operators</span><span class="tag">DeepONet</span><span class="tag">Digital twins</span></div>
+    </div>
+  </article>
+
+  <article class="feature" id="methods">
+    <div class="feature-art reveal"><canvas class="art" data-art="wake" data-seed="4" aria-hidden="true"></canvas></div>
+    <div class="reveal">
+      <p class="meta">Methods</p>
+      <h2>Scientific machine learning</h2>
+      <p>Across projects, I work on making neural networks respect the physics they model: forward and inverse PINNs, operator learning, and architectures including Fourier features, multi-scale Fourier, SIREN, and finite-basis PINNs, built with PyTorch, DeepXDE, and PhysicsNeMo.</p>
+      <p>Several open implementations are on my <a href="{{ '/portfolio/' | relative_url }}">projects page</a> and GitHub.</p>
+      <div class="tags"><span class="tag">PyTorch</span><span class="tag">DeepXDE</span><span class="tag">Inverse problems</span></div>
+    </div>
+  </article>
+
+  <article class="feature" id="actuators">
+    <div class="feature-art reveal"><canvas class="art" data-art="actuator" data-seed="4" aria-hidden="true"></canvas></div>
+    <div class="reveal">
+      <p class="meta">PhD research · University of British Columbia · with Dr. John Madden</p>
+      <h2>Conducting-polymer actuators for tactile feedback</h2>
+      <p>Conducting-polymer actuators are soft artificial muscles that bend as ions move in and out of a polymer. I built hybrid analytical and COMSOL finite-element models of their coupled ionic, electronic, and mechanical response, and characterized devices with electrochemical impedance spectroscopy, dynamic mechanical analysis, and tensile testing.</p>
+      <p>The goal was actuators fast and reliable enough for haptics and VR/AR. I also helped design and prototype a low-cost negative-pressure ventilator within a CAD$24M NSERC Alliance project.</p>
+      <div class="tags"><span class="tag">COMSOL</span><span class="tag">Electrochemistry</span><span class="tag">Haptics</span></div>
+    </div>
+  </article>
+
+  <article class="feature" id="acoustofluidics">
+    <div class="feature-art reveal"><canvas class="art" data-art="acoustic" data-seed="6" aria-hidden="true"></canvas></div>
+    <div class="reveal">
+      <p class="meta">MASc research · University of British Columbia · with Dr. Mina Hoorfar</p>
+      <h2>Acoustofluidics for exosome isolation</h2>
+      <p>I developed lab-on-a-chip devices that use standing surface acoustic waves to separate micron- and nano-scale particles, aimed at isolating extracellular vesicles such as exosomes for biomedical research.</p>
+      <p>The work combined cleanroom microfabrication (interdigital transducers, photolithography, PVD) with COMSOL multiphysics modeling and experimental validation.</p>
+      <div class="tags"><span class="tag">BioMEMS</span><span class="tag">Microfabrication</span><span class="tag">SSAW</span></div>
+    </div>
+  </article>
+
+  <article class="feature" id="optics">
+    <div class="feature-art reveal"><canvas class="art" data-art="rays" data-seed="3" aria-hidden="true"></canvas></div>
+    <div class="reveal">
+      <p class="meta">Postdoctoral research · UBC · Safe Water Optics</p>
+      <h2>Optical modeling for UV-C water purification</h2>
+      <p>I modeled UV-C disinfection systems by combining ray tracing in LightTools and Zemax OpticStudio with PINN-based optical modeling and laboratory validation, to optimize irradiance and system design.</p>
+      <div class="tags"><span class="tag">Ray tracing</span><span class="tag">PINNs</span><span class="tag">UV-C</span></div>
+    </div>
+  </article>
+
+  <article class="feature" id="tumor">
+    <div class="feature-art reveal"><canvas class="art" data-art="dose" data-seed="14" data-label="drug concentration  ·  solid tumor" aria-hidden="true"></canvas></div>
+    <div class="reveal">
+      <p class="meta">Earlier work</p>
+      <h2>Tumor transport and imaging</h2>
+      <p>Earlier projects built image-based models of drug transport through heterogeneous tumor vasculature and modeled PET tracer distribution with the microvasculature included, connecting transport physics with medical imaging.</p>
+      <div class="tags"><span class="tag">Drug delivery</span><span class="tag">PET</span><span class="tag">CFD</span></div>
+    </div>
+  </article>
+</section>

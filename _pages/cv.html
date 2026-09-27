@@ -1,0 +1,106 @@
+---
+layout: flow
+title: "CV"
+permalink: /cv/
+description: "Curriculum vitae of Erfan Taatizadeh: education, research experience, publications, talks, teaching, awards, and service."
+redirect_from:
+  - /resume
+---
+<section class="page-head wrap">
+  <p class="eyebrow reveal">Curriculum vitae</p>
+  <h1 class="h1 reveal">Erfan Taatizadeh</h1>
+  <p class="lead reveal">Postdoctoral Scholar in Biomedical Engineering and Radiology, University of California, Davis · <a href="mailto:{{ site.author.email }}">{{ site.author.email }}</a></p>
+  <div class="cv-actions no-print reveal">
+    <button class="btn primary" type="button" data-print><i class="fa-solid fa-file-arrow-down" aria-hidden="true"></i> Save as PDF</button>
+    <a class="btn ghost" href="{{ site.author.googlescholar }}" target="_blank" rel="noopener"><i class="ai ai-google-scholar" aria-hidden="true"></i> Google Scholar</a>
+  </div>
+</section>
+
+<div class="wrap cv">
+  <section class="cv-section reveal">
+    <h2><i class="fa-solid fa-graduation-cap" aria-hidden="true"></i>Education</h2>
+    <div class="cv-item"><div class="cv-when">2020–2025</div><div><h3>PhD, Biomedical Engineering</h3><p class="org">University of British Columbia, Vancouver</p><p>Thesis: Fast actuation of conducting polymer actuators for tactile feedback technology and other applications. Advisor: Dr. John D. Madden. GPA 3.90/4.00.</p></div></div>
+    <div class="cv-item"><div class="cv-when">2018–2019</div><div><h3>MASc, Mechanical Engineering</h3><p class="org">University of British Columbia, Kelowna</p><p>Thesis: Development of a lab-on-a-chip acoustofluidics platform with a potential application in extracellular vesicles purification. Advisor: Dr. Mina Hoorfar. GPA 4.00/4.00.</p></div></div>
+    <div class="cv-item"><div class="cv-when">2013–2017</div><div><h3>BSc, Mechanical Engineering</h3><p class="org">K. N. Toosi University of Technology, Tehran</p><p>GPA 3.73/4.00. Top 0.5% in the national university entrance exam (Konkur).</p></div></div>
+    <div class="cv-item"><div class="cv-when">2024–2025</div><div><h3>Nanodegree, Machine Learning and AI Python Programming</h3><p class="org">Udacity</p><p>AI programming with Python; machine learning with TensorFlow and PyTorch; deep learning (CNNs, GANs).</p></div></div>
+  </section>
+
+  <section class="cv-section reveal">
+    <h2><i class="fa-solid fa-briefcase" aria-hidden="true"></i>Research experience</h2>
+    <div class="cv-item"><div class="cv-when">Dec 2025 to now</div><div><h3>Postdoctoral Scholar</h3><p class="org">University of California, Davis · Biomedical Engineering and Radiology</p><p>Multiphysics digital-twin models and PINNs for liver cancer imaging and Y-90 radioembolization treatment planning; scientific ML with PyTorch, DeepXDE, and NVIDIA PhysicsNeMo; collaboration with clinicians and imaging scientists.</p></div></div>
+    <div class="cv-item"><div class="cv-when">Jul–Nov 2025</div><div><h3>Postdoctoral Researcher, Safe Water Optics</h3><p class="org">University of British Columbia</p><p>Optical simulation and ray tracing for UV-based water purification (LightTools, Zemax OpticStudio), validated in the lab; PINNs for UV-C system modeling and design optimization.</p></div></div>
+    <div class="cv-item"><div class="cv-when">2020–2025</div><div><h3>PhD Researcher and R&amp;D Engineer</h3><p class="org">University of British Columbia</p><p>Fabricated, tested, and optimized conducting-polymer actuators for tactile feedback; hybrid analytical and COMSOL FEM models; EIS, DMA, and tensile characterization. Co-prepared a CAD$24M NSERC Alliance grant proposal and prototyped a negative-pressure ventilator.</p></div></div>
+    <div class="cv-item"><div class="cv-when">Sep–Dec 2020</div><div><h3>R&amp;D Engineering Intern</h3><p class="org">CanDry Technologies Inc., Vancouver</p><p>COMSOL electromagnetic simulation of a dehydrator prototype; built a modular simulation framework, wrote the user manual, and trained R&amp;D staff.</p></div></div>
+    <div class="cv-item"><div class="cv-when">2018–2019</div><div><h3>Graduate Research Assistant</h3><p class="org">University of British Columbia, Okanagan</p><p>Cleanroom microfabrication of interdigital transducers and microfluidic devices; COMSOL models of acoustofluidic exosome separation; microfluidic DNA hybridization devices and 3D bioprinting.</p></div></div>
+    <div class="cv-item"><div class="cv-when">2015–2017</div><div><h3>Undergraduate Researcher</h3><p class="org">CREM Co Labs and K. N. Toosi University of Technology, Tehran</p><p>MATLAB image processing for automated blood-vessel detection feeding COMSOL drug-delivery models; ANSYS Fluent CFD of an indoor air decontamination device.</p></div></div>
+  </section>
+
+  <section class="cv-section reveal">
+    <h2><i class="fa-solid fa-file-lines" aria-hidden="true"></i>Publications</h2>
+    {%- for cat in site.publication_category %}
+    {%- assign items = site.publications | where: "category", cat[0] | sort: "date" | reverse %}
+    {%- if items.size > 0 %}
+    <h3 class="cv-sub">{{ cat[1].title }}</h3>
+    <ol class="cv-pubs">
+      {%- for pub in items %}
+      <li>{{ pub.citation }}</li>
+      {%- endfor %}
+    </ol>
+    {%- endif %}
+    {%- endfor %}
+  </section>
+
+  <section class="cv-section reveal">
+    <h2><i class="fa-solid fa-microphone" aria-hidden="true"></i>Talks and presentations</h2>
+    {%- assign talks = site.talks | sort: "date" | reverse %}
+    <ul class="cv-list">
+      {%- for t in talks %}
+      <li><b>{{ t.title }}</b>. {{ t.type }}, {{ t.venue }}, {{ t.location }}, {{ t.date | date: "%B %Y" }}.</li>
+      {%- endfor %}
+    </ul>
+  </section>
+
+  <section class="cv-section reveal">
+    <h2><i class="fa-solid fa-chalkboard-user" aria-hidden="true"></i>Teaching</h2>
+    <ul class="cv-list">
+      <li><b>Teaching Fellow and Graduate Teaching Assistant</b>, University of British Columbia, 2018–2025. Led 20+ tutorial and lab sections for 500+ students (average evaluation 4.85/5.00) and mentored 20+ undergraduates. Courses: BMEG 101, BMEG 102, BMEG 321, BMEG 371, MECH 221, MECH 222 / ENGR 310, MECH 224, APSC 160, APSC 171, APSC 253, ENGR 478.</li>
+      <li><b>Teaching Assistant</b>, K. N. Toosi University of Technology: Thermodynamics II; Simulation and Modeling of Biological Systems.</li>
+      <li>Teaching development: Instructional Skills Workshop (UBC); Effective Teaching for Postdocs (UC Davis); Teaching Assistantship Credential (UBC).</li>
+    </ul>
+  </section>
+
+  <section class="cv-section reveal">
+    <h2><i class="fa-solid fa-award" aria-hidden="true"></i>Awards and honours</h2>
+    <ul class="cv-list">
+      <li>President's Academic Excellence Initiative PhD Award, University of British Columbia</li>
+      <li>UBC International Tuition Award (twice)</li>
+      <li>Faculty of Applied Science Graduate Award, University of British Columbia</li>
+      <li>University Graduate Fellowship, UBC Okanagan</li>
+      <li>Top 0.5% in Iran's national university entrance exam (Konkur)</li>
+    </ul>
+  </section>
+
+  <section class="cv-section reveal">
+    <h2><i class="fa-solid fa-certificate" aria-hidden="true"></i>Certifications</h2>
+    <ul class="cv-list">
+      <li>Machine Learning Nanodegree, Udacity</li>
+      <li>Machine Learning Specialization, Stanford University and DeepLearning.AI (Coursera)</li>
+      <li>Python for Everybody Specialization, University of Michigan (Coursera)</li>
+      <li>Crash Course on Python; Git and GitHub, Google (Coursera)</li>
+    </ul>
+  </section>
+
+  <section class="cv-section reveal">
+    <h2><i class="fa-solid fa-handshake-angle" aria-hidden="true"></i>Service</h2>
+    <ul class="cv-list">
+      <li>Peer reviewer: International Journal of Heat and Mass Transfer; Microvascular Research</li>
+      <li>Grant preparation: NSERC Alliance grant (CAD$24M, spinal cord injury recovery), 2021; CFI JELF, 2022</li>
+      <li>Volunteer, Richmond BC Food Bank</li>
+    </ul>
+  </section>
+
+  <section class="cv-section reveal">
+    <h2><i class="fa-solid fa-screwdriver-wrench" aria-hidden="true"></i>Skills</h2>
+    <p class="lead" style="font-size:16px">Scientific ML (PyTorch, TensorFlow, scikit-learn, DeepXDE, NVIDIA PhysicsNeMo), simulation (COMSOL, ANSYS, ABAQUS), programming (Python, MATLAB, C/C++, Java), optics (LightTools, Zemax), CAD (SolidWorks, AutoCAD), and microfabrication. <a class="no-print" href="{{ '/skills/' | relative_url }}">See all skills</a>.</p>
+  </section>
+</div>
