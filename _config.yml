@@ -1,21 +1,20 @@
 # Basic Site Settings
 locale                   : "en-US"
-site_theme               : "default" # The available themes options are "default", "air", "sunrise", "mint", "dirt" and "contrast"
+site_theme               : "default"
 title                    : "Erfan Taatizadeh"
 title_separator          : "-"
 name                     : &name "Erfan Taatizadeh"
-description              : &description "Postdoctoral Scholar in Biomedical Engineering & Radiology at UC Davis — physics-informed neural networks, scientific machine learning, and computational modeling for medicine."
+description              : &description "Postdoctoral Scholar at UC Davis building physics-informed neural networks and neural operators for patient-specific blood flow and liver cancer therapy planning."
 url                      : https://erfan-taatizadeh.github.io
 baseurl                  : ""
 repository               : "erfan-taatizadeh/erfan-taatizadeh.github.io"
 
-# Site Author - controls the left-hand sidebar
+# Site Author
 author:
-  # Biographic information
   avatar           : "photo_2026-06-26%2013.36.23.jpeg"
   name             : "Erfan Taatizadeh"
   pronouns         :
-  bio              : "Postdoctoral Scholar in Biomedical Engineering & Radiology at UC Davis. I build physics-informed neural networks and digital-twin models for medicine."
+  bio              : "Postdoctoral Scholar in Biomedical Engineering and Radiology at UC Davis. I build physics-informed neural networks and digital-twin models for medicine."
   location         : "Davis, CA, USA"
   employer         : "UC Davis"
   uri              :
@@ -27,14 +26,13 @@ author:
   googlescholar    : "https://scholar.google.com/citations?user=ggSqVg8AAAAJ&hl=en"
   inspire-hep      :
   impactstory      :
-  orcid            :
+  orcid            : "https://orcid.org/0000-0001-7625-104X"
   semantic         :
   ssrn             :
   pubmed           :
   researchgate     :
   scopus           :
   zotero           :
-
 
   # Repositories and software development
   bitbucket        :
@@ -71,83 +69,51 @@ author:
   youtube          :
   zhihu            :
 
-# Publication Category - headings on the Publications page
+# Publication categories (order used on the CV page)
 publication_category:
   manuscripts:
     title: 'Journal Articles'
   conferences:
-    title: 'Conference Papers & Proceedings'
+    title: 'Conference Papers and Proceedings'
   theses:
     title: 'Theses'
 
 # Site Settings
 teaser                   :
-breadcrumbs              : false # true, false (default)
+breadcrumbs              : false
 words_per_minute         : 160
 future                   : true
-read_more                : "disabled" # if enabled, adds "Read more" links to excerpts
-talkmap_link             : false      #change to true to add link to talkmap on talks page
+read_more                : "disabled"
+talkmap_link             : false
 comments:
-  provider               : # false (default), "disqus", "discourse", "facebook", "google-plus", "staticman", "custom"
-  disqus:
-    shortname            :
-  discourse:
-    server               : # https://meta.discourse.org/t/embedding-discourse-comments-via-javascript/31963 , e.g.: meta.discourse.org
-  facebook:
-    appid                :
-    num_posts            : # 5 (default)
-    colorscheme          : # "light" (default), "dark"
-staticman:
-  allowedFields          : ['name', 'email', 'url', 'message']
-  branch                 : "gh-pages" # "master", "gh-pages"
-  commitMessage          : "New comment."
-  filename               : comment-{@timestamp}
-  format                 : "yml"
-  moderation             : true
-  path                   : "_data/comments/{options.slug}"
-  requiredFields         : ['name', 'email', 'message']
-  transforms:
-    email                : "md5"
-  generatedFields:
-    date:
-      type               : "date"
-      options:
-        format           : "iso8601" # "iso8601" (default), "timestamp-seconds", "timestamp-milliseconds"
+  provider               :
 atom_feed:
-  hide                   : false     # change to true to hide the RSS feed in the footer
-  path                   : # blank (default) uses feed.xml
-
+  hide                   : false
+  path                   :
 
 # SEO Related
 google_site_verification :
 bing_site_verification   :
-alexa_site_verification  :
-yandex_site_verification :
-
 
 # Social Sharing
 twitter:
-  username               : &twitter
+  username               :
 facebook:
   username               :
   app_id                 :
   publisher              :
-og_image                 :  # Social media default site image
-og_description           :  # Social media default site image description
-# For specifying social profiles
-# - https://developers.google.com/structured-data/customize/social-profiles
+og_image                 :
+og_description           :
 social:
-  type                   : # Person or Organization (defaults to Person)
-  name                   : # If the user or organization name differs from the site's name
-  links: # An array of links to social media profiles
-
+  type                   :
+  name                   :
+  links:
 
 # Analytics
 analytics:
-  provider               :  "false" # false (default), "google", "google-universal", "google-analytics-4", "custom"
+  provider               :  "false"
   google:
     tracking_id          :
-
 
 # Reading Files
 include:
@@ -169,6 +135,7 @@ exclude:
   - Capfile
   - config
   - Dockerfile
+  - docker-compose.yaml
   - Gemfile
   - Gruntfile.js
   - gulpfile.js
@@ -179,6 +146,13 @@ exclude:
   - package.json*
   - Rakefile
   - README
+  - README.md
+  - markdown_generator
+  - scripts
+  - talkmap
+  - talkmap.py
+  - talkmap.ipynb
+  - talkmap_out.ipynb
   - tmp
   - vendor
 keep_files:
@@ -187,14 +161,12 @@ keep_files:
 encoding: "utf-8"
 markdown_ext: "markdown,mkdown,mkdn,mkd,md"
 
-
 # Conversion
 markdown: kramdown
 highlighter: rouge
 lsi: false
 excerpt_separator: "\n\n"
 incremental: false
-
 
 # Markdown Processing
 kramdown:
@@ -207,8 +179,7 @@ kramdown:
   smart_quotes: lsquo,rsquo,ldquo,rdquo
   enable_coderay: false
 
-
-# These settings control the types of collections used by the template
+# Collections
 collections:
   teaching:
     output: true
@@ -223,76 +194,48 @@ collections:
     output: true
     permalink: /:collection/:path/
 
-
-# These settings control how pages and collections are included in the site
+# Layout defaults (Flow design)
 defaults:
-  # _posts
   - scope:
       path: ""
       type: posts
     values:
       layout: single
       author_profile: true
-      read_time: true
-      comments: true
-      share: true
-      related: true
-  # _pages
   - scope:
       path: ""
       type: pages
     values:
-      layout: single
-      author_profile: true
-  # _teaching
+      layout: flow
   - scope:
       path: ""
       type: teaching
     values:
-      layout: single
-      author_profile: true
-      share: true
-      comments: true
-  # _publications
+      layout: flow-item
   - scope:
       path: ""
       type: publications
     values:
-      layout: single
-      author_profile: true
-      share: true
-      comments: true
-  # _portfolio
+      layout: flow-item
   - scope:
       path: ""
       type: portfolio
     values:
-      layout: single
-      author_profile: true
-      share: true
-      comment: true
-  # _talks
+      layout: flow-item
   - scope:
       path: ""
       type: talks
     values:
-      layout: talk
-      author_profile: true
-      share: true
-
+      layout: flow-item
 
 # Sass/SCSS
 sass:
   sass_dir: _sass
-  style: compressed # https://sass-lang.com/documentation/file.SASS_REFERENCE.html#output_style
-
+  style: compressed
 
 # Outputting
 permalink: /:categories/:title/
-# paginate: 5 # amount of posts to show
-# paginate_path: /page:num/
-timezone: Etc/UTC # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
-
+timezone: America/Los_Angeles
 
 # Plugins
 plugins:
@@ -303,7 +246,6 @@ plugins:
   - jekyll-redirect-from
   - jemoji
 
-# Mimic GitHub Pages with --safe
 whitelist:
   - jekyll-feed
   - jekyll-gist
@@ -312,38 +254,13 @@ whitelist:
   - jekyll-redirect-from
   - jemoji
 
-
-# Archives
-#  Type
-#  - GitHub Pages compatible archive pages built with Liquid ~> type: liquid (default)
-#  - Jekyll Archives plugin archive pages ~> type: jekyll-archives
-#  Path (examples)
-#  - Archive page should exist at path when using Liquid method or you can
-#    expect broken links (especially with breadcrumbs enabled)
-#  - <base_path>/tags/my-awesome-tag/index.html ~> path: /tags/
-#  - <base_path/categories/my-awesome-category/index.html ~> path: /categories/
-#  - <base_path/my-awesome-category/index.html ~> path: /
 category_archive:
   type: liquid
   path: /categories/
 tag_archive:
   type: liquid
   path: /tags/
-# https://github.com/jekyll/jekyll-archives
-# jekyll-archives:
-#   enabled:
-#     - categories
-#     - tags
-#   layouts:
-#     category: archive-taxonomy
-#     tag: archive-taxonomy
-#   permalinks:
-#     category: /categories/:name/
-#     tag: /tags/:name/
 
-
-# HTML Compression
-# - https://jch.penibelst.de/
 compress_html:
   clippings: all
   ignore:

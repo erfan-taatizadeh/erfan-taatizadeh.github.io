@@ -1,23 +1,16 @@
-# Header navigation links
-
+# Header navigation (Flow design)
 main:
   - title: "Research"
     url: /research/
-
   - title: "Publications"
     url: /publications/
-
+  - title: "Projects"
+    url: /portfolio/
   - title: "Talks"
     url: /talks/
-
   - title: "Teaching"
     url: /teaching/
-
-  - title: "Portfolio"
-    url: /portfolio/
-
   - title: "Skills"
     url: /skills/
-
   - title: "CV"
     url: /cv/
