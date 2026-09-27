@@ -1,12 +1,34 @@
 ---
-layout: archive
+layout: flow
 title: "Teaching"
 permalink: /teaching/
-author_profile: true
+description: "Teaching experience of Erfan Taatizadeh at the University of British Columbia and K. N. Toosi University of Technology."
 ---
+<section class="page-head wrap">
+  <p class="eyebrow reveal">Teaching</p>
+  <h1 class="h1 reveal">Teaching and mentoring</h1>
+  <p class="lead reveal">Seven years of tutorials, labs, and mentoring across mechanical, electrical, and biomedical engineering.</p>
+</section>
 
-{% include base_path %}
-
-{% for post in site.teaching reversed %}
-  {% include archive-single.html %}
-{% endfor %}
+<section class="wrap">
+  <div class="mini-stats reveal">
+    <div><b>20+</b><span>tutorial and lab sections</span></div>
+    <div><b>500+</b><span>students taught</span></div>
+    <div><b>4.85/5</b><span>average evaluation</span></div>
+    <div><b>20+</b><span>students mentored</span></div>
+  </div>
+  <div class="teach-grid">
+    {% assign items = site.teaching | sort: "date" | reverse %}
+    {% for t in items %}
+    <a class="card reveal" href="{{ t.url | relative_url }}">
+      <div class="card-body">
+        <div class="tags"><span class="tag status">{{ t.type }}</span>{% if t.period %}<span class="tag">{{ t.period }}</span>{% endif %}</div>
+        <h3>{{ t.title }}</h3>
+        <p class="card-org">{{ t.venue }} · {{ t.location }}</p>
+        <p>{{ t.excerpt | strip_html }}</p>
+        <span class="more">Details <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
+      </div>
+    </a>
+    {% endfor %}
+  </div>
+</section>

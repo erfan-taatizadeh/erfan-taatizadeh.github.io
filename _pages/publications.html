@@ -1,36 +1,43 @@
 ---
-layout: archive
+layout: flow
 title: "Publications"
 permalink: /publications/
-author_profile: true
+description: "Publications by Erfan Taatizadeh in scientific machine learning, microfluidics, conducting-polymer actuators, and computational modeling."
 ---
+<section class="page-head wrap">
+  <p class="eyebrow reveal">Publications</p>
+  <h1 class="h1 reveal">Papers and theses</h1>
+  <p class="lead reveal">{{ site.publications | size }} works across computational modeling, microfluidics, and electroactive polymers. Also on <a href="{{ site.author.googlescholar }}" target="_blank" rel="noopener">Google Scholar</a>.</p>
+  <div class="filters reveal" role="group" aria-label="Filter publications">
+    <button class="chip on" type="button" data-filter="all" aria-pressed="true">All <span class="n"></span></button>
+    <button class="chip" type="button" data-filter="manuscripts" aria-pressed="false">Journal articles <span class="n"></span></button>
+    <button class="chip" type="button" data-filter="conferences" aria-pressed="false">Conference papers <span class="n"></span></button>
+    <button class="chip" type="button" data-filter="theses" aria-pressed="false">Theses <span class="n"></span></button>
+    <button class="chip" type="button" data-filter="first" aria-pressed="false">First author <span class="n"></span></button>
+  </div>
+</section>
 
-{% if site.author.googlescholar %}
-  <div class="wordwrap">You can also find my articles on <a href="{{site.author.googlescholar}}">my Google Scholar profile</a>.</div>
-{% endif %}
-
-{% include base_path %}
-
-<!-- New style rendering if publication categories are defined -->
-{% if site.publication_category %}
-  {% for category in site.publication_category  %}
-    {% assign title_shown = false %}
-    {% for post in site.publications reversed %}
-      {% if post.category != category[0] %}
-        {% continue %}
-      {% endif %}
-      {% unless title_shown %}
-        <h2>{{ category[1].title }}</h2><hr />
-        {% assign title_shown = true %}
-      {% endunless %}
-      {% include archive-single.html %}
-    {% endfor %}
-  {% endfor %}
-{% else %}
-  {% for post in site.publications reversed %}
-    {% include archive-single.html %}
-  {% endfor %}
-{% endif %}
-
-
-
+<section class="wrap pubs">
+{%- assign pubs = site.publications | sort: "date" | reverse -%}
+{%- assign cur = "" -%}
+{%- for pub in pubs -%}
+{%- assign y = pub.date | date: "%Y" -%}
+{%- if y != cur -%}
+{%- unless forloop.first %}</div>{% endunless %}
+<div class="year-group"><h2 class="year">{{ y }}</h2>
+{%- assign cur = y -%}
+{%- endif %}
+<article class="pub-card" data-cat="{{ pub.category }}" data-first="{% if pub.first_author %}true{% else %}false{% endif %}">
+  <div>
+    <a class="pub-title" href="{{ pub.url | relative_url }}">{{ pub.title }}</a>
+    <p class="pub-authors">{{ pub.authors }}</p>
+    <p class="pub-venue">{{ pub.venue }}</p>
+  </div>
+  <div class="pub-badges">
+    <span class="badge">{% case pub.category %}{% when "manuscripts" %}Journal{% when "conferences" %}Conference{% when "theses" %}Thesis{% endcase %}</span>
+    {% if pub.first_author %}<span class="badge first">First author</span>{% endif %}
+  </div>
+</article>
+{%- if forloop.last %}</div>{% endif -%}
+{%- endfor %}
+</section>
