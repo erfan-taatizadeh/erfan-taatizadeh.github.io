@@ -1,8 +1,12 @@
 ---
-title: "Physics-Informed Neural Networks (Forward Problems)"
-excerpt: "Forward PINNs for 1D/2D Burgers, 1D/2D heat, and Navier–Stokes (with particle tracing) in PyTorch and DeepXDE.<br/><i>Open source on GitHub</i>"
+title: "Physics-informed neural networks for forward problems"
 collection: portfolio
+order: 5
+art: waves
+seed: 1
+status: "Open source"
+tags: [PyTorch, DeepXDE, PDEs]
+repo: "https://github.com/erfan-taatizadeh/physics-informed-neural-networks"
+excerpt: "Forward PINN solvers for 1D and 2D Burgers, 1D and 2D heat, and Navier–Stokes with particle tracing."
 ---
-A collection of forward physics-informed neural-network solvers for canonical PDEs — 1D/2D Burgers, 1D/2D heat, and Navier–Stokes (including particle tracing) — implemented in **PyTorch** and **DeepXDE**.
-
-[View on GitHub](https://github.com/erfan-taatizadeh/physics-informed-neural-networks)
+A collection of forward physics-informed neural network solvers for canonical PDEs: 1D and 2D Burgers, 1D and 2D heat, and Navier–Stokes, including particle tracing. Implemented in **PyTorch** and **DeepXDE**.

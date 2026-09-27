@@ -1,8 +1,12 @@
 ---
 title: "Inverse PINNs"
-excerpt: "Inverse physics-informed neural networks that infer PDE parameters and hidden fields from data — Burgers, the TVD equation, and the Navier–Stokes cylinder wake.<br/><i>Open source on GitHub</i>"
 collection: portfolio
+order: 6
+art: wake
+seed: 2
+status: "Open source"
+tags: [PyTorch, Inverse problems]
+repo: "https://github.com/erfan-taatizadeh/inverse-pinns"
+excerpt: "Recovering unknown PDE parameters and hidden fields from sparse data: Burgers, the TVD equation, and a Navier–Stokes cylinder wake."
 ---
-Inverse PINNs that recover unknown PDE parameters and hidden fields directly from sparse data, demonstrated on the 1D Burgers equation, the TVD equation, and the Navier–Stokes cylinder-wake problem.
-
-[View on GitHub](https://github.com/erfan-taatizadeh/inverse-pinns)
+Inverse PINNs that recover unknown PDE parameters and hidden fields directly from sparse data, demonstrated on the 1D Burgers equation, the TVD equation, and the Navier–Stokes cylinder wake.

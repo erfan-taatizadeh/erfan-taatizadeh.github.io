@@ -1,8 +1,12 @@
 ---
-title: "Step-by-Step PINN Implementations"
-excerpt: "Hand-built PINNs for the heat, Burgers, and Navier–Stokes equations in PyTorch and DeepXDE — a from-scratch learning resource.<br/><i>Open source on GitHub</i>"
+title: "Step-by-step PINN implementations"
 collection: portfolio
+order: 8
+art: waves
+seed: 7
+status: "Open source"
+tags: [PyTorch, DeepXDE, Tutorial]
+repo: "https://github.com/erfan-taatizadeh/pinns-my-implementations"
+excerpt: "Clean, from-scratch PINNs for the heat, Burgers, and Navier–Stokes equations, written as a learning resource."
 ---
-A set of clean, step-by-step PINN implementations (heat, Burgers, Navier–Stokes) in **PyTorch** and **DeepXDE**, written as a from-scratch learning resource.
-
-[View on GitHub](https://github.com/erfan-taatizadeh/pinns-my-implementations)
+A set of clean, step-by-step PINN implementations for the heat, Burgers, and Navier–Stokes equations in **PyTorch** and **DeepXDE**, written from scratch as a learning resource.
