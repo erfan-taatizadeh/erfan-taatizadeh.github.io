@@ -135,13 +135,13 @@
     if (!w || !h) return null;
     cv.width = Math.round(w * r); cv.height = Math.round(h * r);
     var x = cv.getContext('2d'); x.setTransform(r, 0, 0, r, 0, 0);
-    return { x: x, W: w, H: h };
+    return { x: x, W: w, H: h, lab: cv.getAttribute('data-label') };
   }
   function base(c, P, grid) {
     var x = c.x; x.clearRect(0, 0, c.W, c.H); x.fillStyle = P.bg; x.fillRect(0, 0, c.W, c.H);
     if (grid) { x.strokeStyle = P.grid; x.lineWidth = 1; x.beginPath(); for (var gx = 24; gx < c.W; gx += 24) { x.moveTo(gx + .5, 0); x.lineTo(gx + .5, c.H); } for (var gy = 24; gy < c.H; gy += 24) { x.moveTo(0, gy + .5); x.lineTo(c.W, gy + .5); } x.stroke(); }
   }
-  function label(c, P, t) { var x = c.x; x.font = '500 11px JetBrains Mono, ui-monospace, monospace'; x.fillStyle = rgba(P.ink, .5); x.fillText(t, 14, c.H - 14); }
+  function label(c, P, t) { var x = c.x; x.font = '500 11px JetBrains Mono, ui-monospace, monospace'; x.fillStyle = rgba(P.ink, .5); x.fillText(c.lab || t, 14, c.H - 14); }
   function rr(x, a, b, w, h, r) { x.beginPath(); x.moveTo(a + r, b); x.arcTo(a + w, b, a + w, b + h, r); x.arcTo(a + w, b + h, a, b + h, r); x.arcTo(a, b + h, a, b, r); x.arcTo(a, b, a + w, b, r); x.closePath(); }
   var ART = {};
 
