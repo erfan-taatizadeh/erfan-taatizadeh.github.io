@@ -8,149 +8,190 @@ redirect_from:
   - /about.html
 ---
 <section class="hero" id="top">
-  <canvas class="hero-canvas" id="flowfield" aria-hidden="true"></canvas>
+  <canvas class="art" data-art="hero" data-seed="21" aria-hidden="true"></canvas>
   <div class="wrap hero-in">
-    <div class="hero-text">
-      <p class="eyebrow reveal">Scientific ML · Hemodynamics · UC Davis</p>
-      <h1 class="hero-name reveal">Erfan<br><span class="grad">Taatizadeh</span></h1>
-      <p class="hero-lead reveal">I build physics-informed neural networks and neural operators that simulate patient-specific blood flow in seconds, so liver cancer therapy can be planned faster and more precisely.</p>
-      <div class="cta-row reveal">
-        <a class="btn primary" href="{{ '/research/' | relative_url }}">Explore research <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
-        <a class="btn ghost" href="{{ '/publications/' | relative_url }}">Publications</a>
-        <a class="btn ghost" href="{{ '/cv/' | relative_url }}">CV</a>
-      </div>
-      <div class="reveal">{% include flow-social.html %}</div>
-    </div>
-    <div class="hero-portrait reveal">
-      <div class="ring" aria-hidden="true"></div>
-      <div class="portrait"><img src="{{ '/images/' | append: site.author.avatar | relative_url }}" alt="Portrait of Erfan Taatizadeh" width="380" height="380" fetchpriority="high"></div>
-      <div class="badge-float b1"><span class="live" aria-hidden="true"></span>Postdoc at UC Davis</div>
+    <p class="eyebrow reveal">Postdoctoral Scholar · UC Davis</p>
+    <h1 class="reveal" style="--d:.08s"><em>Erfan</em> Taatizadeh</h1>
+    <p class="hero-sub reveal" style="--d:.16s">Physics-informed machine learning for patient-specific medicine</p>
+    <div class="cta-row reveal" style="--d:.24s">
+      <a class="duo" href="{{ '/research/' | relative_url }}"><span class="btn cream">Explore my research</span><span class="sq cream"><span class="ar" aria-hidden="true"></span></span></a>
+      <a class="btn ghost-c" href="{{ '/cv/' | relative_url }}">View CV</a>
     </div>
   </div>
+</section>
+
+<section class="panel-sec" aria-label="Illustration">
   <div class="wrap">
-    <dl class="hero-stats reveal">
+    <figure class="panel reveal">
+      <canvas class="art fill" data-art="panel" data-seed="5" aria-hidden="true"></canvas>
+      <figcaption>Microspheres carried by blood flow through a hepatic artery · generative illustration</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="intro" id="about">
+  <div class="wrap">
+    <p class="eyebrow reveal">About</p>
+    <p class="statement reveal">I build physics-informed neural networks and neural operators that simulate patient-specific blood flow in seconds, so liver cancer therapy can be planned <em>faster and more precisely.</em></p>
+    <div class="intro-grid">
+      <ul class="facts reveal">
+        <li><span class="k">Now</span><span>Postdoctoral Scholar, University of California, Davis</span></li>
+        <li><span class="k">PhD</span><span>Biomedical Engineering, University of British Columbia, 2025</span></li>
+        <li><span class="k">MASc</span><span>Mechanical Engineering, University of British Columbia, 2019</span></li>
+        <li><span class="k">BSc</span><span>Mechanical Engineering, K. N. Toosi University of Technology, 2017</span></li>
+      </ul>
+      <div class="prose reveal">
+        <p>I'm a Postdoctoral Scholar in Biomedical Engineering and Radiology at UC Davis. I study how blood moves through the hepatic arteries, because in Y-90 radioembolization, a targeted liver cancer therapy, where the flow goes is where the treatment goes.</p>
+        <p>Over seven years I've built multiphysics models in COMSOL and trained PINNs, DeepONets, and geometry-aware neural operators with PyTorch, DeepXDE, and NVIDIA PhysicsNeMo, validating them against finite-element simulation and laboratory experiments.</p>
+        <a class="btn" href="{{ '/research/' | relative_url }}">More about my research <span class="ar" aria-hidden="true"></span></a>
+      </div>
+    </div>
+    <dl class="stats reveal">
       <div><dt>Publications</dt><dd data-count="16">16</dd></div>
-      <div><dt>First-author</dt><dd data-count="6">6</dd></div>
+      <div><dt>First-author papers and theses</dt><dd data-count="6">6</dd></div>
       <div><dt>Years in CFD and ML</dt><dd data-count="7" data-suffix="+">7+</dd></div>
       <div><dt>Students taught</dt><dd data-count="500" data-suffix="+">500+</dd></div>
     </dl>
   </div>
-  <a class="scroll-cue" href="#about" aria-label="Scroll to about"><span></span></a>
 </section>
 
-<section class="section" id="about">
-  <div class="wrap grid-2">
-    <div class="reveal">
-      <p class="eyebrow">About</p>
-      <h2 class="h2">Bridging physics-based modeling and machine learning for medicine</h2>
+<section class="sec tight-top" id="research">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div><p class="eyebrow">Research</p><h2 class="h2">What I <em>work on</em></h2></div>
     </div>
-    <div class="prose reveal">
-      <p>I'm a Postdoctoral Scholar in Biomedical Engineering and Radiology at the <strong>University of California, Davis</strong>. I study how blood moves through the hepatic arteries, because in <strong>Y-90 radioembolization</strong>, a targeted liver cancer therapy, where the flow goes is where the treatment goes.</p>
-      <p>Over seven years I've built multiphysics models in COMSOL and trained PINNs, DeepONets, and geometry-aware neural operators with PyTorch, DeepXDE, and NVIDIA PhysicsNeMo, validating them against finite-element simulation and laboratory experiments.</p>
-      <div class="now-card">
-        <div class="now-row"><span class="now-k">Now</span><span>Postdoctoral Scholar, UC Davis · since 2025</span></div>
-        <div class="now-row"><span class="now-k">PhD</span><span>Biomedical Engineering, University of British Columbia · 2025</span></div>
-        <div class="now-row"><span class="now-k">MASc</span><span>Mechanical Engineering, University of British Columbia · 2019</span></div>
-        <div class="now-row"><span class="now-k">BSc</span><span>Mechanical Engineering, K. N. Toosi University of Technology · 2017</span></div>
+    <div class="rows">
+      <a class="row reveal" href="{{ '/research/' | relative_url }}#pinns">
+        <div class="row-k"><canvas class="art" data-art="icon" data-motif="stream" data-seed="3" data-pal="rose" aria-hidden="true"></canvas><span class="mono">01 · Flow</span></div>
+        <h3 class="row-t">Physics-informed neural networks</h3>
+        <div class="row-d"><p>Navier–Stokes solved directly on patient-specific hepatic arteries and validated against CFD.</p><span class="btn">Learn more <span class="ar" aria-hidden="true"></span></span></div>
+      </a>
+      <a class="row reveal" href="{{ '/research/' | relative_url }}#operators">
+        <div class="row-k"><canvas class="art" data-art="icon" data-motif="grid" data-seed="7" data-pal="blue" aria-hidden="true"></canvas><span class="mono">02 · Surrogates</span></div>
+        <h3 class="row-t">Geometry-aware neural operators</h3>
+        <div class="row-d"><p>Surrogates that predict flow in new vessel shapes in seconds instead of hours.</p><span class="btn">Learn more <span class="ar" aria-hidden="true"></span></span></div>
+      </a>
+      <a class="row reveal" href="{{ '/portfolio/' | relative_url }}">
+        <div class="row-k"><canvas class="art" data-art="icon" data-motif="dose" data-seed="5" data-pal="peach" aria-hidden="true"></canvas><span class="mono">03 · Therapy</span></div>
+        <h3 class="row-t">Y-90 dosimetry</h3>
+        <div class="row-d"><p>From the predicted flow split to microsphere transport to a 3D absorbed-dose map.</p><span class="btn">Learn more <span class="ar" aria-hidden="true"></span></span></div>
+      </a>
+      <a class="row reveal" href="{{ '/portfolio/' | relative_url }}">
+        <div class="row-k"><canvas class="art" data-art="icon" data-motif="tree" data-seed="9" data-pal="sage" aria-hidden="true"></canvas><span class="mono">04 · Tools</span></div>
+        <h3 class="row-t">Digital twins</h3>
+        <div class="row-d"><p>Interactive tools that turn research surrogates into something you can explore in real time.</p><span class="btn">Learn more <span class="ar" aria-hidden="true"></span></span></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="values" data-values style="--n:4" aria-labelledby="values-h">
+  <div class="values-sticky">
+    <div class="wrap values-in">
+      <div>
+        <p class="eyebrow">How I work</p>
+        <h2 class="sr" id="values-h">Principles behind the research</h2>
+        <div class="v-l">
+          <ul class="v-list">
+            <li class="on"><button class="v-btn" type="button"><span>Physics first</span></button></li>
+            <li><button class="v-btn" type="button"><span>Patient-specific</span></button></li>
+            <li><button class="v-btn" type="button"><span>Clinically fast</span></button></li>
+            <li><button class="v-btn" type="button"><span>Validated</span></button></li>
+          </ul>
+          <svg class="v-loop" viewBox="0 0 400 120" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M36 74C22 40 112 12 214 11c108-1 176 22 172 56-4 34-98 46-196 44C96 109 18 98 14 66 11 40 74 21 150 16"/></svg>
+        </div>
+      </div>
+      <div>
+        <div class="v-r">
+          <div class="v-text on"><span class="mono">Method</span><p>Models that respect conservation laws need less data, generalize better to new anatomy, and fail in ways we can reason about. The physics lives in the loss, the architecture, or both.</p></div>
+          <div class="v-text" aria-hidden="true"><span class="mono">Data</span><p>No two hepatic arterial trees are alike. Simulations should start from the patient's own imaging rather than an average anatomy, because the flow split decides where the treatment goes.</p></div>
+          <div class="v-text" aria-hidden="true"><span class="mono">Speed</span><p>A treatment plan cannot wait hours for a CFD solve. Neural surrogates bring flow predictions down to seconds, so planning can become interactive.</p></div>
+          <div class="v-text" aria-hidden="true"><span class="mono">Trust</span><p>Every surrogate is checked against finite-element simulation and, where possible, laboratory experiments, so speed never comes at the cost of trust.</p></div>
+        </div>
+        <p class="v-count"><b>01</b> / 04</p>
       </div>
     </div>
   </div>
 </section>
 
-<section class="section alt" id="research">
+<section class="sec" id="projects" data-carousel>
   <div class="wrap">
     <div class="sec-head reveal">
-      <div><p class="eyebrow">Research</p><h2 class="h2">What I work on</h2></div>
-      <a class="link-arrow" href="{{ '/research/' | relative_url }}">Full research overview <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+      <div><p class="eyebrow">Projects</p><h2 class="h2">Selected <em>projects</em></h2></div>
+      <div class="car-ctrl">
+        <button class="sq" type="button" data-prev aria-label="Previous projects"><span class="ar l" aria-hidden="true"></span></button>
+        <button class="sq" type="button" data-next aria-label="Next projects"><span class="ar" aria-hidden="true"></span></button>
+      </div>
     </div>
-    <div class="cards-4">
-      <a class="card reveal" href="{{ '/research/' | relative_url }}#pinns">
-        <canvas class="art" data-art="streamlines" data-seed="3" aria-hidden="true"></canvas>
-        <div class="card-body"><h3>Physics-informed neural networks</h3><p>Navier–Stokes solved directly on patient-specific hepatic arteries, validated against CFD.</p></div>
-      </a>
-      <a class="card reveal" href="{{ '/research/' | relative_url }}#operators">
-        <canvas class="art" data-art="operator" data-seed="7" aria-hidden="true"></canvas>
-        <div class="card-body"><h3>Neural operators</h3><p>Geometry-aware surrogates that predict flow in new vessel shapes in seconds instead of hours.</p></div>
-      </a>
-      <a class="card reveal" href="{{ '/portfolio/' | relative_url }}">
-        <canvas class="art" data-art="dose" data-seed="5" aria-hidden="true"></canvas>
-        <div class="card-body"><h3>Y-90 dosimetry</h3><p>From the predicted flow split to microsphere transport to a 3D absorbed-dose map.</p></div>
-      </a>
-      <a class="card reveal" href="{{ '/portfolio/' | relative_url }}">
-        <canvas class="art" data-art="tree" data-seed="9" aria-hidden="true"></canvas>
-        <div class="card-body"><h3>Digital twins</h3><p>Interactive tools that turn research surrogates into something you can explore in real time.</p></div>
-      </a>
+  </div>
+  {% assign projects = site.portfolio | sort: "order" %}
+  <div class="car-track reveal">
+    {% for p in projects %}
+    <a class="ccard" href="{{ p.url | relative_url }}">
+      <div class="c-art"><canvas class="art" data-art="{{ p.art }}" data-seed="{{ p.seed }}" aria-hidden="true"></canvas></div>
+      <div class="c-body">
+        <span class="mono">{% if p.status == 'Private' %}Current research{% else %}Open source{% endif %}</span>
+        <h3>{{ p.title }}</h3>
+        <div class="c-foot"><span class="mono">{% for t in p.tags limit: 2 %}{{ t }}{% unless forloop.last %} · {% endunless %}{% endfor %}</span><span class="sq"><span class="ar" aria-hidden="true"></span></span></div>
+      </div>
+    </a>
+    {% endfor %}
+  </div>
+  <div class="wrap"><p class="reveal" style="margin-top:34px"><a class="btn ghost" href="{{ '/portfolio/' | relative_url }}">All projects <span class="ar" aria-hidden="true"></span></a></p></div>
+</section>
+
+<section class="sec tint" id="quote">
+  <div class="wrap quote-in">
+    <figure class="photo reveal"><img src="{{ '/images/' | append: site.author.avatar | relative_url }}" alt="Portrait of Erfan Taatizadeh" width="1280" height="960" loading="lazy"></figure>
+    <div class="reveal">
+      <p class="eyebrow">Why it matters</p>
+      <blockquote class="quote-text">“The goal is simple to state and hard to reach: a treatment plan built around each patient's own anatomy, from a simulation fast enough to use in the clinic.”</blockquote>
+      <p class="sig" aria-hidden="true">Erfan Taatizadeh</p>
+      <p class="who">Erfan Taatizadeh<br>Postdoctoral Scholar, UC Davis</p>
     </div>
   </div>
 </section>
 
-<section class="section" id="projects">
+<section class="sec" id="publications">
   <div class="wrap">
     <div class="sec-head reveal">
-      <div><p class="eyebrow">Projects</p><h2 class="h2">Selected projects</h2></div>
-      <a class="link-arrow" href="{{ '/portfolio/' | relative_url }}">All projects <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
-    </div>
-    {% assign featured = site.portfolio | where: "featured", true | sort: "order" %}
-    <div class="proj-grid">
-      {% for p in featured %}
-      <a class="card reveal" href="{{ p.url | relative_url }}">
-        <canvas class="art" data-art="{{ p.art }}" data-seed="{{ p.seed }}" aria-hidden="true"></canvas>
-        <div class="card-body">
-          <div class="tags"><span class="tag status{% if p.status == 'Private' %} private{% endif %}">{% if p.status == 'Private' %}<i class="fa-solid fa-lock" aria-hidden="true"></i>{% else %}<i class="fa-brands fa-github" aria-hidden="true"></i>{% endif %} {{ p.status }}</span>{% for t in p.tags limit: 2 %}<span class="tag">{{ t }}</span>{% endfor %}</div>
-          <h3>{{ p.title }}</h3>
-          <p>{{ p.excerpt | strip_html }}</p>
-          <span class="more">Read more <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
-        </div>
-      </a>
-      {% endfor %}
-    </div>
-  </div>
-</section>
-
-<section class="section alt" id="publications">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <div><p class="eyebrow">Publications</p><h2 class="h2">First-author highlights</h2></div>
-      <a class="link-arrow" href="{{ '/publications/' | relative_url }}">All {{ site.publications | size }} publications <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+      <div><p class="eyebrow">Publications</p><h2 class="h2">First-author <em>highlights</em></h2></div>
+      <a class="btn ghost" href="{{ '/publications/' | relative_url }}">All {{ site.publications | size }} publications <span class="ar" aria-hidden="true"></span></a>
     </div>
     {% assign firsts = site.publications | where: "first_author", true | sort: "date" | reverse %}
-    <ol class="pub-list">
+    <ol class="plist">
       {% for pub in firsts limit: 4 %}
-      <li class="reveal">
-        <span class="pub-year">{{ pub.date | date: "%Y" }}</span>
-        <div><a class="pub-title" href="{{ pub.url | relative_url }}">{{ pub.title }}</a><p class="pub-venue">{{ pub.venue }}</p></div>
-        <i class="fa-solid fa-arrow-right pub-go" aria-hidden="true"></i>
-      </li>
+      <li class="reveal"><a href="{{ pub.url | relative_url }}"><span class="y">{{ pub.date | date: "%Y" }}</span><span><span class="t">{{ pub.title }}</span><span class="v">{{ pub.venue }}</span></span><span class="sq"><span class="ar" aria-hidden="true"></span></span></a></li>
       {% endfor %}
     </ol>
   </div>
 </section>
 
-<section class="section" id="journey">
+<section class="sec tight-top" id="journey">
   <div class="wrap">
     <div class="sec-head reveal">
-      <div><p class="eyebrow">Journey</p><h2 class="h2">From microfluidics to medical digital twins</h2></div>
-      <a class="link-arrow" href="{{ '/cv/' | relative_url }}">Full CV <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+      <div><p class="eyebrow">Journey</p><h2 class="h2">From microfluidics to <em>medical digital twins</em></h2></div>
+      <a class="btn ghost" href="{{ '/cv/' | relative_url }}">Full CV <span class="ar" aria-hidden="true"></span></a>
     </div>
-    <ol class="timeline">
-      <li class="reveal"><span class="t-date">Since Dec 2025</span><h3>Postdoctoral Scholar</h3><p class="t-org">UC Davis · Biomedical Engineering and Radiology</p><p>PINNs and neural operators for hepatic hemodynamics and Y-90 treatment planning.</p></li>
-      <li class="reveal"><span class="t-date">2025</span><h3>Postdoctoral Researcher</h3><p class="t-org">University of British Columbia · Safe Water Optics</p><p>PINN-based optical modeling and ray tracing for UV-C water purification.</p></li>
-      <li class="reveal"><span class="t-date">2020–2025</span><h3>PhD, Biomedical Engineering</h3><p class="t-org">University of British Columbia</p><p>Fast conducting-polymer actuators for tactile feedback: modeling, fabrication, and characterization.</p></li>
-      <li class="reveal"><span class="t-date">2018–2019</span><h3>MASc, Mechanical Engineering</h3><p class="t-org">University of British Columbia</p><p>Acoustofluidic lab-on-a-chip devices for exosome isolation.</p></li>
-      <li class="reveal"><span class="t-date">2013–2017</span><h3>BSc, Mechanical Engineering</h3><p class="t-org">K. N. Toosi University of Technology</p><p>Top 0.5% in Iran's national university entrance exam.</p></li>
+    <ol class="tl">
+      <li class="reveal"><span class="d">Since Dec 2025</span><div><h3>Postdoctoral Scholar</h3><p class="o">UC Davis · Biomedical Engineering and Radiology</p></div><p>PINNs and neural operators for hepatic hemodynamics and Y-90 treatment planning.</p></li>
+      <li class="reveal"><span class="d">2025</span><div><h3>Postdoctoral Researcher</h3><p class="o">University of British Columbia · Safe Water Optics</p></div><p>PINN-based optical modeling and ray tracing for UV-C water purification.</p></li>
+      <li class="reveal"><span class="d">2020 to 2025</span><div><h3>PhD, Biomedical Engineering</h3><p class="o">University of British Columbia</p></div><p>Fast conducting-polymer actuators for tactile feedback: modeling, fabrication, and characterization.</p></li>
+      <li class="reveal"><span class="d">2018 to 2019</span><div><h3>MASc, Mechanical Engineering</h3><p class="o">University of British Columbia</p></div><p>Acoustofluidic lab-on-a-chip devices for exosome isolation.</p></li>
+      <li class="reveal"><span class="d">2013 to 2017</span><div><h3>BSc, Mechanical Engineering</h3><p class="o">K. N. Toosi University of Technology</p></div><p>Top 0.5% in Iran's national university entrance exam.</p></li>
     </ol>
   </div>
 </section>
 
-<section class="section" id="contact">
+<section class="sec tight-top" id="contact">
   <div class="wrap">
-    <div class="cta-box reveal">
-      <canvas class="art cta-art" data-art="streamlines" data-seed="11" aria-hidden="true"></canvas>
-      <div class="cta-in">
+    <div class="band reveal">
+      <canvas class="art fill" data-art="hero" data-seed="11" data-pal="clay" aria-hidden="true"></canvas>
+      <div class="band-in">
         <p class="eyebrow">Contact</p>
-        <h2 class="h2">Let's build faster, more personal medicine</h2>
+        <h2 class="h2">Let's build faster, more <em>personal</em> medicine</h2>
         <p>I'm open to collaborations on scientific machine learning, computational hemodynamics, and digital twins.</p>
-        <a class="btn primary" href="mailto:{{ site.author.email }}"><i class="fa-solid fa-envelope" aria-hidden="true"></i> Get in touch</a>
+        <div class="cta-row"><a class="duo" href="mailto:{{ site.author.email }}"><span class="btn cream">Get in touch</span><span class="sq cream"><span class="ar" aria-hidden="true"></span></span></a></div>
         {% include flow-social.html %}
       </div>
     </div>

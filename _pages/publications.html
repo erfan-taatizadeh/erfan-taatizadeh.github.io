@@ -4,27 +4,36 @@ title: "Publications"
 permalink: /publications/
 description: "Publications by Erfan Taatizadeh in scientific machine learning, microfluidics, conducting-polymer actuators, and computational modeling."
 ---
-<section class="page-head wrap">
-  <p class="eyebrow reveal">Publications</p>
-  <h1 class="h1 reveal">Papers and theses</h1>
-  <p class="lead reveal">{{ site.publications | size }} works across computational modeling, microfluidics, and electroactive polymers. Also on <a href="{{ site.author.googlescholar }}" target="_blank" rel="noopener">Google Scholar</a>.</p>
-  <div class="filters reveal" role="group" aria-label="Filter publications">
-    <button class="chip on" type="button" data-filter="all" aria-pressed="true">All <span class="n"></span></button>
-    <button class="chip" type="button" data-filter="manuscripts" aria-pressed="false">Journal articles <span class="n"></span></button>
-    <button class="chip" type="button" data-filter="conferences" aria-pressed="false">Conference papers <span class="n"></span></button>
-    <button class="chip" type="button" data-filter="theses" aria-pressed="false">Theses <span class="n"></span></button>
-    <button class="chip" type="button" data-filter="first" aria-pressed="false">First author <span class="n"></span></button>
+<section class="phead">
+  <canvas class="art" data-art="hero" data-seed="3" data-pal="slate" aria-hidden="true"></canvas>
+  <div class="wrap phead-in">
+    <p class="eyebrow reveal">Publications</p>
+    <h1 class="h1 reveal" style="--d:.08s">Papers and <em>theses</em></h1>
+    <p class="lead reveal" style="--d:.16s">{{ site.publications | size }} works across computational modeling, microfluidics, and electroactive polymers. Also on <a href="{{ site.author.googlescholar }}" target="_blank" rel="noopener">Google Scholar</a>.</p>
   </div>
 </section>
 
-<section class="wrap pubs">
+<div class="filterbar">
+  <div class="wrap">
+    <div class="filters" role="group" aria-label="Filter publications">
+      <button class="chip on" type="button" data-filter="all" aria-pressed="true">All <span class="n"></span></button>
+      <button class="chip" type="button" data-filter="manuscripts" aria-pressed="false">Journal articles <span class="n"></span></button>
+      <button class="chip" type="button" data-filter="conferences" aria-pressed="false">Conference papers <span class="n"></span></button>
+      <button class="chip" type="button" data-filter="theses" aria-pressed="false">Theses <span class="n"></span></button>
+      <button class="chip" type="button" data-filter="first" aria-pressed="false">First author <span class="n"></span></button>
+    </div>
+  </div>
+</div>
+
+<section class="pubs">
+  <div class="wrap">
 {%- assign pubs = site.publications | sort: "date" | reverse -%}
 {%- assign cur = "" -%}
 {%- for pub in pubs -%}
 {%- assign y = pub.date | date: "%Y" -%}
 {%- if y != cur -%}
-{%- unless forloop.first %}</div>{% endunless %}
-<div class="year-group"><h2 class="year">{{ y }}</h2>
+{%- unless forloop.first %}</div></div>{% endunless %}
+<div class="year-group"><h2 class="year">{{ y }}</h2><div>
 {%- assign cur = y -%}
 {%- endif %}
 <article class="pub-card" data-cat="{{ pub.category }}" data-first="{% if pub.first_author %}true{% else %}false{% endif %}">
@@ -34,10 +43,11 @@ description: "Publications by Erfan Taatizadeh in scientific machine learning, m
     <p class="pub-venue">{{ pub.venue }}</p>
   </div>
   <div class="pub-badges">
-    <span class="badge">{% case pub.category %}{% when "manuscripts" %}Journal{% when "conferences" %}Conference{% when "theses" %}Thesis{% endcase %}</span>
-    {% if pub.first_author %}<span class="badge first">First author</span>{% endif %}
+    <span class="tag">{% case pub.category %}{% when "manuscripts" %}Journal{% when "conferences" %}Conference{% when "theses" %}Thesis{% endcase %}</span>
+    {% if pub.first_author %}<span class="tag dark">First author</span>{% endif %}
   </div>
 </article>
-{%- if forloop.last %}</div>{% endif -%}
+{%- if forloop.last %}</div></div>{% endif -%}
 {%- endfor %}
+  </div>
 </section>

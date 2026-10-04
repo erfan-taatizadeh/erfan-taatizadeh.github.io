@@ -4,31 +4,36 @@ title: "Teaching"
 permalink: /teaching/
 description: "Teaching experience of Erfan Taatizadeh at the University of British Columbia and K. N. Toosi University of Technology."
 ---
-<section class="page-head wrap">
-  <p class="eyebrow reveal">Teaching</p>
-  <h1 class="h1 reveal">Teaching and mentoring</h1>
-  <p class="lead reveal">Seven years of tutorials, labs, and mentoring across mechanical, electrical, and biomedical engineering.</p>
+<section class="phead">
+  <canvas class="art" data-art="hero" data-seed="9" data-pal="plum" aria-hidden="true"></canvas>
+  <div class="wrap phead-in">
+    <p class="eyebrow reveal">Teaching</p>
+    <h1 class="h1 reveal" style="--d:.08s">Teaching and <em>mentoring</em></h1>
+    <p class="lead reveal" style="--d:.16s">Seven years of tutorials, labs, and mentoring across mechanical, electrical, and biomedical engineering.</p>
+  </div>
 </section>
 
-<section class="wrap">
-  <div class="mini-stats reveal">
-    <div><b>20+</b><span>tutorial and lab sections</span></div>
-    <div><b>500+</b><span>students taught</span></div>
-    <div><b>4.85/5</b><span>average evaluation</span></div>
-    <div><b>20+</b><span>students mentored</span></div>
-  </div>
-  <div class="teach-grid">
-    {% assign items = site.teaching | sort: "date" | reverse %}
-    {% for t in items %}
-    <a class="card reveal" href="{{ t.url | relative_url }}">
-      <div class="card-body">
-        <div class="tags"><span class="tag status">{{ t.type }}</span>{% if t.period %}<span class="tag">{{ t.period }}</span>{% endif %}</div>
-        <h3>{{ t.title }}</h3>
-        <p class="card-org">{{ t.venue }} · {{ t.location }}</p>
-        <p>{{ t.excerpt | strip_html }}</p>
-        <span class="more">Details <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
-      </div>
-    </a>
-    {% endfor %}
+<section class="sec">
+  <div class="wrap">
+    <div class="mini reveal">
+      <div><b>20+</b><span>Tutorial and lab sections</span></div>
+      <div><b>500+</b><span>Students taught</span></div>
+      <div><b>4.85</b><span>Average evaluation out of 5</span></div>
+      <div><b>20+</b><span>Students mentored</span></div>
+    </div>
+    <div class="pgrid">
+      {% assign items = site.teaching | sort: "date" | reverse %}
+      {% for t in items %}
+      <a class="pcard reveal" href="{{ t.url | relative_url }}">
+        <div class="c-art"><canvas class="art" data-art="waves" data-seed="{{ forloop.index | plus: 4 }}" data-pal="{% cycle 'dusk', 'peach' %}" aria-hidden="true"></canvas></div>
+        <div class="c-body">
+          <span class="mono">{{ t.type }}{% if t.period %} · {{ t.period }}{% endif %}</span>
+          <h3>{{ t.title }}</h3>
+          <p>{{ t.excerpt | strip_html }}</p>
+          <div class="c-foot"><span class="mono">{{ t.venue }}</span><span class="sq"><span class="ar" aria-hidden="true"></span></span></div>
+        </div>
+      </a>
+      {% endfor %}
+    </div>
   </div>
 </section>

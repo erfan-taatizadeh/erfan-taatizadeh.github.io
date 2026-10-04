@@ -4,19 +4,24 @@ title: "Talks"
 permalink: /talks/
 description: "Conference talks and posters by Erfan Taatizadeh."
 ---
-<section class="page-head wrap">
-  <p class="eyebrow reveal">Talks</p>
-  <h1 class="h1 reveal">Talks and presentations</h1>
-  <p class="lead reveal">Conference talks and posters on scientific ML, electroactive polymers, and computational modeling.</p>
+<section class="phead">
+  <canvas class="art" data-art="hero" data-seed="4" data-pal="moss" aria-hidden="true"></canvas>
+  <div class="wrap phead-in">
+    <p class="eyebrow reveal">Talks</p>
+    <h1 class="h1 reveal" style="--d:.08s">Talks and <em>presentations</em></h1>
+    <p class="lead reveal" style="--d:.16s">Conference talks and posters on scientific ML, electroactive polymers, and computational modeling.</p>
+  </div>
 </section>
 
-<section class="wrap rows">
-  {% assign talks = site.talks | sort: "date" | reverse %}
-  {% for t in talks %}
-  <a class="row-card reveal" href="{{ t.url | relative_url }}">
-    <div class="rc-date"><span class="m">{{ t.date | date: "%b" }}</span><span class="y">{{ t.date | date: "%Y" }}</span></div>
-    <div><span class="badge">{{ t.type }}</span><h3>{{ t.title }}</h3><p>{{ t.venue }} · {{ t.location }}</p></div>
-    <i class="fa-solid fa-arrow-right rc-go" aria-hidden="true"></i>
-  </a>
-  {% endfor %}
+<section class="sec">
+  <div class="wrap lrows">
+    {% assign talks = site.talks | sort: "date" | reverse %}
+    {% for t in talks %}
+    <a class="lrow reveal" href="{{ t.url | relative_url }}">
+      <span class="d">{{ t.date | date: "%B %Y" }}<br>{{ t.type }}</span>
+      <div><h3>{{ t.title }}</h3><p class="v">{{ t.venue }} · {{ t.location }}</p></div>
+      <span class="sq"><span class="ar" aria-hidden="true"></span></span>
+    </a>
+    {% endfor %}
+  </div>
 </section>
