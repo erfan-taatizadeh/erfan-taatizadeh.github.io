@@ -1,9 +1,9 @@
 <!doctype html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<script>document.documentElement.classList.add('js');try{var s=localStorage.getItem('et-theme');if(s==='light'||s==='dark'){document.documentElement.setAttribute('data-theme',s);}}catch(e){}</script>
+<script>document.documentElement.classList.add('js');</script>
 {%- if page.url == "/" -%}
 {%- assign ptitle = site.name | append: " · Scientific ML for medicine" -%}
 {%- else -%}
@@ -28,12 +28,12 @@
 {%- if site.google_site_verification %}
 <meta name="google-site-verification" content="{{ site.google_site_verification }}">
 {%- endif %}
-<meta name="theme-color" content="#070b14">
+<meta name="theme-color" content="#FEF9ED">
 <link rel="icon" type="image/svg+xml" href="{{ '/assets/flow/favicon.svg' | relative_url }}">
 <link rel="alternate" type="application/atom+xml" title="{{ site.name }}" href="{{ '/feed.xml' | relative_url }}">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..600&family=Red+Hat+Mono:wght@400;500&family=Mrs+Saint+Delafield&display=swap">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
 {%- if page.devicon %}
@@ -68,19 +68,19 @@
 </head>
 <body class="{% if page.url == '/' %}is-home{% endif %}">
 <a class="skip" href="#main">Skip to content</a>
-<div class="progress" id="progress" aria-hidden="true"></div>
 <header class="nav" id="nav">
-  <div class="nav-in">
-    <a class="brand" href="{{ '/' | relative_url }}" aria-label="Erfan Taatizadeh, home"><span class="mono-mark">ET</span><span class="brand-name">Erfan Taatizadeh</span></a>
-    <nav class="links" id="links" aria-label="Main">
-      {%- for l in site.data.navigation.main %}
-      <a href="{{ l.url | relative_url }}"{% if page.url contains l.url or page.collection == 'publications' and l.url == '/publications/' %} class="on" aria-current="page"{% endif %}>{{ l.title }}</a>
-      {%- endfor %}
-    </nav>
-    <div class="nav-actions">
-      <button class="icon-btn" id="theme" type="button" aria-label="Switch between light and dark theme"><i class="fa-solid fa-sun i-sun" aria-hidden="true"></i><i class="fa-solid fa-moon i-moon" aria-hidden="true"></i></button>
-      <button class="icon-btn menu-btn" id="menu" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="links"><i class="fa-solid fa-bars" aria-hidden="true"></i></button>
-    </div>
+  <a class="brand" href="{{ '/' | relative_url }}" aria-label="Erfan Taatizadeh, home"><em>Erfan</em> Taatizadeh</a>
+  <nav class="links" id="links" aria-label="Main">
+    {%- for l in site.data.navigation.main %}
+    {%- assign on = false -%}
+    {%- if page.url contains l.url -%}{%- assign on = true -%}{%- endif -%}
+    {%- if page.collection == 'publications' and l.url == '/publications/' -%}{%- assign on = true -%}{%- endif %}
+    <a href="{{ l.url | relative_url }}"{% if on %} class="on" aria-current="page"{% endif %}>{{ l.title }}</a>
+    {%- endfor %}
+  </nav>
+  <div class="nav-r">
+    <a class="nav-cta" href="mailto:{{ site.author.email }}">Get in touch <span class="ar ne" aria-hidden="true"></span></a>
+    <button class="menu-btn" id="menu" type="button" aria-expanded="false" aria-controls="links"><span class="ml">Menu</span><span class="burger" aria-hidden="true"><i></i><i></i></span></button>
   </div>
 </header>
 <main id="main">
@@ -88,14 +88,39 @@
 </main>
 <footer class="foot">
   <div class="wrap">
-    <div class="foot-in">
-      <div>
-        <a class="brand" href="{{ '/' | relative_url }}"><span class="mono-mark">ET</span><span class="brand-name">Erfan Taatizadeh</span></a>
-        <p>Physics-informed machine learning for patient-specific medicine. Postdoctoral Scholar at UC Davis.</p>
-      </div>
-      {% include flow-social.html %}
+    <div class="foot-top">
+      <a class="foot-name" href="{{ '/' | relative_url }}"><em>Erfan</em> Taatizadeh</a>
+      <p class="foot-tag">Physics-informed machine learning for patient-specific medicine. Postdoctoral Scholar at UC Davis.</p>
     </div>
-    <div class="foot-bottom"><span>© {{ site.time | date: '%Y' }} Erfan Taatizadeh</span><span>Davis, California</span></div>
+    <div class="foot-cols">
+      <div>
+        <p class="foot-h">Explore</p>
+        <a href="{{ '/' | relative_url }}">Home</a>
+        <a href="{{ '/research/' | relative_url }}">Research</a>
+        <a href="{{ '/publications/' | relative_url }}">Publications</a>
+        <a href="{{ '/portfolio/' | relative_url }}">Projects</a>
+      </div>
+      <div>
+        <p class="foot-h">More</p>
+        <a href="{{ '/talks/' | relative_url }}">Talks</a>
+        <a href="{{ '/teaching/' | relative_url }}">Teaching</a>
+        <a href="{{ '/skills/' | relative_url }}">Skills</a>
+        <a href="{{ '/cv/' | relative_url }}">CV</a>
+      </div>
+      <div>
+        <p class="foot-h">Elsewhere</p>
+        {%- if site.author.googlescholar %}<a href="{{ site.author.googlescholar }}" rel="me noopener" target="_blank">Google Scholar <span class="ar ne" aria-hidden="true"></span></a>{% endif %}
+        {%- if site.author.github %}<a href="https://github.com/{{ site.author.github }}" rel="me noopener" target="_blank">GitHub <span class="ar ne" aria-hidden="true"></span></a>{% endif %}
+        {%- if site.author.linkedin %}<a href="https://www.linkedin.com/in/{{ site.author.linkedin }}" rel="me noopener" target="_blank">LinkedIn <span class="ar ne" aria-hidden="true"></span></a>{% endif %}
+        {%- if site.author.orcid %}<a href="{{ site.author.orcid }}" rel="me noopener" target="_blank">ORCID <span class="ar ne" aria-hidden="true"></span></a>{% endif %}
+      </div>
+      <div>
+        <p class="foot-h">Contact</p>
+        <a href="mailto:{{ site.author.email }}">{{ site.author.email }}</a>
+        <span>Davis, California</span>
+      </div>
+    </div>
+    <div class="foot-bottom"><span>© {{ site.time | date: '%Y' }} Erfan Taatizadeh</span><span>Built with Jekyll · Hosted on GitHub Pages</span></div>
   </div>
 </footer>
 <script src="{{ '/assets/flow/flow.js' | relative_url }}?v={{ site.time | date: '%s' }}" defer></script>
