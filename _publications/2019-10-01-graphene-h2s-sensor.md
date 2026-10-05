@@ -10,4 +10,4 @@ authors: "A. Yavarinasab, S. Janfaza, M.M. Montazeri, N. Tasnim, A.D. Farahani, 
 first_author: false
 citation: 'A. Yavarinasab, S. Janfaza, M.M. Montazeri, N. Tasnim, A.D. Farahani, <b>E. Taatizadeh</b> (2019). "A graphene-based chemical sensor for hydrogen sulfide measurement in water." <i>IEEE Sensors Conference Proceedings</i>, 1–4.'
 ---
-This IEEE Sensors paper presents a graphene-based electrochemical sensor for measuring hydrogen sulfide concentration in aqueous environments.
+This IEEE Sensors paper presents a graphene-based chemical sensor for measuring hydrogen sulfide in water.

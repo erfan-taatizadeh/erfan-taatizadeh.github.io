@@ -11,6 +11,6 @@ excerpt: "An interactive app serving the GINOT operator: pick or upload a vessel
 ---
 An interactive digital-twin application that serves the GINOT vessel-flow neural operator behind a **FastAPI** backend with a **Streamlit** and **Plotly** front end.
 
-Users can pick or upload a vessel geometry, set the inlet velocity, and immediately explore the predicted three-dimensional flow and pressure fields, turning a research surrogate into a usable clinical research tool.
+Users can pick or upload a vessel geometry, set the inlet velocity, and explore the predicted three-dimensional flow and pressure fields, turning a research surrogate into an interactive, self-hosted research tool.
 
 *The code is private and available on request.*
