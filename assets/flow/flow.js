@@ -201,7 +201,7 @@
   var HOT_B = ['#F4F9FF', '#C7E0F6', '#8DBBE5', '#4A7FBA', '#2C5A92'].map(hx);
   var INK_W = hx('#4A3F38'), INK_B = hx('#1F2A37'), CREAM = hx('#FEF9ED'), BONE = hx('#F6EAD6');
   var ACC = ACC_W, HOT = HOT_W, INK = INK_W;
-  var DEF = { hero: ['rose'], panel: ['blue'], streamlines: ['rose', 'peach'], operator: ['blue', 'sage'], dose: ['dusk', 'blue'], tree: ['peach', 'sand'],
+  var DEF = { hero: ['rose'], panel: ['blue'], streamlines: ['rose', 'peach'], operator: ['blue', 'sage'], dose: ['dusk', 'blue'], transport: ['dusk', 'rose'], tree: ['peach', 'sand'],
     waves: ['blue', 'peach'], wake: ['sage', 'blue'], network: ['sand', 'sage'], actuator: ['peach', 'sand'], acoustic: ['blue', 'sage'], rays: ['dusk', 'blue'], icon: ['rose'] };
 
   function bez(p0, p1, p2, n) { var o = []; for (var i = 0; i <= n; i++) { var t = i / n, u = 1 - t; o.push([u * u * p0[0] + 2 * u * t * p1[0] + t * t * p2[0], u * u * p0[1] + 2 * u * t * p1[1] + t * t * p2[1]]); } return o; }
@@ -220,7 +220,7 @@
   function angAt(pts, i, asp) { var a = pts[Math.max(0, i - 1)], b = pts[Math.min(pts.length - 1, i + 1)]; return Math.atan2(b[1] - a[1], (b[0] - a[0]) * asp); }
   function blobs(m, r, P, n, rmin, rr) { for (var i = 0; i < n; i++) m.push({ t: 'b', x: r(), y: r(), r: rmin + r() * rr, c: pick(r, P.c), a: 0.5 + r() * 0.4 }); }
   function inkFor(P) { return lum(P.bg) > 0.62 ? INK : CREAM; }
-  function label(m, P, s, x, y, tx, ty, al) { m.push({ t: 't', s: s, x: x, y: y, tx: tx, ty: ty, al: al, c: inkFor(P), h: P.bg, a: 0.9 }); }
+  function label(m, P, s, x, y, tx, ty, al, pri) { m.push({ t: 't', s: s, x: x, y: y, tx: tx, ty: ty, al: al, c: inkFor(P), h: P.bg, a: 0.9, pri: pri || 1 }); }
   function line(m, P, pts, w, a, extra) { var o = { t: 'l', p: pts, w: w, c: inkFor(P), a: a, wob: 0.7 }; if (extra) for (var k in extra) o[k] = extra[k]; m.push(o); }
   function arrow(m, P, pts, w, a, hs) { m.push({ t: 'a', p: pts, w: w || 1.1, c: inkFor(P), a: a || 0.7, hs: hs || 1, wob: 0.5 }); }
   function collocation(m, r, P, n, x0, y0, x1, y1) { for (var i = 0; i < n; i++) m.push({ t: 'd', x: x0 + r() * (x1 - x0), y: y0 + r() * (y1 - y0), r: 0.0035, c: inkFor(P), a: 0.55, flat: 1 }); }
@@ -405,64 +405,222 @@
       label(m, P, 'predicted flow', (rx + tw * 0.5) / asp, 0.06, null, null, 'center');
       return { bg: P.bg, m: m, soft: 0.24, grain: 0.11 };
     },
-    dose: function (r, P, asp, cv) {
-      /* Y-90 radioembolization (or, with data-variant="drug", drug delivery): feeding artery, microspheres lodged at arteriole tips, isodose contours from the sphere distribution */
-      var m = [], i, k, S = Math.min(asp, 1), drug = !!(cv && cv.getAttribute('data-variant') === 'drug');
+    dose: function (r, P, asp) {
+      /* Y-90 radioembolization, 2D schematic in frontal view:
+         liver outline with a tumor in the right lobe; the hepatic artery and portal vein enter at the porta hepatis;
+         a microcatheter advanced through the hepatic artery into the right hepatic branch releases 20-60 um microspheres;
+         the tumor takes most of its blood from the hepatic artery (normal liver mostly from the portal vein),
+         so spheres lodge in the tumor's arterioles, densest at its hypervascular rim;
+         isodose lines follow the sphere distribution (mean beta range about 2.5 mm) */
+      var m = [], i, k, S = Math.min(asp, 1);
       function N(p) { return [p[0] / asp, p[1]]; }
       function NP(a) { return a.map(N); }
-      blobs(m, r, P, 7, 0.4, 0.5);
-      for (i = 0; i < 14; i++) m.push({ t: 's', p: wave(-0.1, 1.1, r() * 1.1 - 0.05, 0.02 + r() * 0.05, 0.8 + r(), r() * 6, (r() - 0.5) * 0.4, r, 0.01), w: 0.05 + r() * 0.1, c: pick(r, P.c), a: 0.2 + r() * 0.25, b: 0.6 });
-      var C = [asp * (0.58 + (r() - 0.5) * 0.06), 0.45 + (r() - 0.5) * 0.06], Rt = 0.21 * S, ph1 = r() * 6.28, ph2 = r() * 6.28;
-      function trad(th) { return Rt * (1 + 0.14 * Math.sin(3 * th + ph1) + 0.06 * Math.sin(5 * th + ph2)); }
+      function offW(pts, d) { var o = []; for (var j = 0; j < pts.length; j++) { var a = pts[Math.max(0, j - 1)], b = pts[Math.min(pts.length - 1, j + 1)], dx = b[0] - a[0], dy = b[1] - a[1], l = Math.hypot(dx, dy) || 1; o.push([pts[j][0] - dy / l * d, pts[j][1] + dx / l * d]); } return o; }
+      function wig(a, b, amp, n) { var o = [], dx = b[0] - a[0], dy = b[1] - a[1], L = Math.hypot(dx, dy) || 1, nx = -dy / L, ny = dx / L, ph = r() * 6.28; for (var j = 0; j <= n; j++) { var t = j / n, w = Math.sin(t * Math.PI * 2.4 + ph) * amp * Math.sin(t * Math.PI); o.push([a[0] + dx * t + nx * w, a[1] + dy * t + ny * w]); } return o; }
+      function vessel(path, rw, lumen, dashed, alpha) {
+        m.push({ t: 's', p: NP(path), w: 2 * rw / S, c: lumen, a: alpha, b: 0.4 });
+        var ex = dashed ? { dash: [4, 3] } : null;
+        line(m, P, NP(offW(path, rw)), 1, 0.6, ex); line(m, P, NP(offW(path, -rw)), 1, 0.6, ex);
+      }
+      blobs(m, r, P, 6, 0.4, 0.5);
+      /* liver box, fitted to the canvas with a fixed aspect ratio */
+      var Hl = Math.min(0.74, 0.88 * asp / 1.45), Wl = Hl * 1.45, X0 = (asp - Wl) / 2, Y0 = 0.5 - Hl / 2 - 0.03;
+      function L(lx, ly) { return [X0 + lx * Wl, Y0 + ly * Hl]; }
+      var lv = [[0.03, 0.55], [0.04, 0.3], [0.2, 0.07], [0.48, 0.03], [0.74, 0.12], [0.93, 0.24], [0.99, 0.32], [0.86, 0.4], [0.66, 0.47], [0.56, 0.53], [0.47, 0.6], [0.36, 0.78], [0.22, 0.95], [0.09, 0.86], [0.03, 0.55], [0.04, 0.3]].map(function (q) { return L(q[0], q[1]); });
+      var liver = []; for (i = 0; i < lv.length - 2; i++) { var a0 = [(lv[i][0] + lv[i + 1][0]) / 2, (lv[i][1] + lv[i + 1][1]) / 2], a1 = [(lv[i + 1][0] + lv[i + 2][0]) / 2, (lv[i + 1][1] + lv[i + 2][1]) / 2]; liver = liver.concat(bez(a0, lv[i + 1], a1, 6).slice(i ? 1 : 0)); }
+      m.push({ t: 'g', p: NP(liver), c: P.hi[0], a: 0.55 });
+      for (i = 0; i < 8; i++) { var yy = Y0 + Hl * (0.15 + i * 0.1); m.push({ t: 's', p: [N(L(0.08, (yy - Y0) / Hl)), N(L(0.5, (yy - Y0) / Hl + 0.02)), N(L(0.85, (yy - Y0) / Hl - 0.05))], w: 0.04, c: pick(r, P.c), a: 0.12, b: 0.3 }); }
+      /* tumor in the right lobe */
+      var C = L(0.27, 0.43), Rt = 0.13 * Math.min(Wl, Hl * 1.45) * 0.75, ph1 = r() * 6.28, ph2 = r() * 6.28;
+      function trad(th) { return Rt * (1 + 0.12 * Math.sin(3 * th + ph1) + 0.05 * Math.sin(5 * th + ph2)); }
+      function onRim(th, f) { return [C[0] + Math.cos(th) * trad(th) * f, C[1] + Math.sin(th) * trad(th) * f]; }
       var outline = [];
-      for (i = 0; i <= 72; i++) { var th = i / 72 * 6.2832; outline.push([C[0] + Math.cos(th) * trad(th), C[1] + Math.sin(th) * trad(th)]); }
-      m.push({ t: 'g', p: NP(outline), c: HOT[1], a: 0.35 });
-      /* feeding artery entering from the lower left and branching inside the tumor */
-      var E = [-0.02, 0.9], J = [C[0] - Rt * 0.95, C[1] + Rt * 0.45];
-      var main = bez(E, [asp * 0.2, 0.92], J, 18), vr = 0.022 * S;
-      m.push({ t: 's', p: NP(main), w: 2.4 * vr / S, c: P.lo[0], a: 0.55, b: 0.5 });
-      m.push({ t: 's', p: NP(main), w: 1.4 * vr / S, c: P.hi[0], a: 0.7, b: 0 });
-      line(m, P, NP(offset(main.map(N), vr / S, asp).map(function (q) { return [q[0] * asp, q[1]]; })), 1.1, 0.6);
-      line(m, P, NP(offset(main.map(N), -vr / S, asp).map(function (q) { return [q[0] * asp, q[1]]; })), 1.1, 0.6);
-      var tips = [], normalTip = null, base = Math.atan2(C[1] - J[1], C[0] - J[0]);
-      [-0.55, 0, 0.55].forEach(function (da) {
-        var a1 = base + da + (r() - 0.5) * 0.2, L1 = Rt * (0.55 + r() * 0.25), M1 = [J[0] + Math.cos(a1) * L1, J[1] + Math.sin(a1) * L1];
-        var c1 = [(J[0] + M1[0]) / 2 - Math.sin(a1) * L1 * 0.18 * (r() < 0.5 ? -1 : 1), (J[1] + M1[1]) / 2 + Math.cos(a1) * L1 * 0.18], seg1 = bez(J, c1, M1, 10);
-        m.push({ t: 's', p: NP(seg1), w: 1.3 * vr / S, c: P.lo[0], a: 0.45, b: 0.5 });
-        line(m, P, NP(seg1), 1.1, 0.65);
-        [-0.45, 0.45].forEach(function (db) {
-          var a2 = a1 + db + (r() - 0.5) * 0.2, L2 = Rt * (0.35 + r() * 0.3), T = [M1[0] + Math.cos(a2) * L2, M1[1] + Math.sin(a2) * L2];
-          var c2 = [(M1[0] + T[0]) / 2 - Math.sin(a2) * L2 * 0.2 * (db < 0 ? 1 : -1), (M1[1] + T[1]) / 2 + Math.cos(a2) * L2 * 0.2 * (db < 0 ? 1 : -1)];
-          line(m, P, NP(bez(M1, c2, T, 8)), 0.8, 0.55);
-          tips.push(T);
+      for (i = 0; i <= 72; i++) outline.push(onRim(i / 72 * 6.2832, 1));
+      m.push({ t: 'g', p: NP(outline), c: HOT[1], a: 0.4 });
+      /* porta hepatis: hepatic artery and portal vein enter from below */
+      var PH = L(0.5, 0.6), vr = 0.012 * S;
+      var pvIn = bez([PH[0] + 0.04 * S, 1.08], [PH[0] + 0.05 * S, (PH[1] + 1) / 2], [PH[0] + 0.03 * S, PH[1] + 0.01], 10);
+      var pvR = bez(pvIn[pvIn.length - 1], L(0.42, 0.14), L(0.1, 0.2), 14), pvL = bez(pvIn[pvIn.length - 1], L(0.7, 0.36), L(0.88, 0.3), 12);
+      vessel(pvIn, 1.9 * vr, P.lo[1], true, 0.45); vessel(pvR, 1.4 * vr, P.lo[1], true, 0.4); vessel(pvL, 1.2 * vr, P.lo[1], true, 0.4);
+      var artC = HOT[3];
+      var haIn = bez([PH[0] - 0.03 * S, 1.08], [PH[0] - 0.04 * S, (PH[1] + 1) / 2], PH, 12);
+      var Bin = onRim(-0.15, 1), rha = bez(PH, L(0.4, 0.5), Bin, 14);
+      var lha = bez(PH, L(0.66, 0.44), L(0.86, 0.33), 12), seg2 = bez(rha[5], L(0.3, 0.76), L(0.15, 0.72), 10), seg3 = bez(rha[4], L(0.46, 0.24), L(0.24, 0.16), 12);
+      vessel(haIn, vr, artC, false, 0.55); vessel(rha, 0.85 * vr, artC, false, 0.55); vessel(lha, 0.8 * vr, artC, false, 0.5); vessel(seg2, 0.6 * vr, artC, false, 0.45); vessel(seg3, 0.6 * vr, artC, false, 0.45);
+      /* segmental and subsegmental branching through the rest of the liver (space colonization) */
+      function inPoly(p, poly) { var c = false; for (var a = 0, b = poly.length - 1; a < poly.length; b = a++) { var pa = poly[a], pb = poly[b]; if (((pa[1] > p[1]) !== (pb[1] > p[1])) && (p[0] < (pb[0] - pa[0]) * (p[1] - pa[1]) / (pb[1] - pa[1]) + pa[0])) c = !c; } return c; }
+      function inTumor(p, f) { var th = Math.atan2(p[1] - C[1], p[0] - C[0]); return Math.hypot(p[0] - C[0], p[1] - C[1]) < trad(th) * f; }
+      function inside(p, mg) { return inPoly(p, liver) && inPoly([p[0] + mg, p[1]], liver) && inPoly([p[0] - mg, p[1]], liver) && inPoly([p[0], p[1] + mg], liver) && inPoly([p[0], p[1] - mg], liver); }
+      function colonize(roots, nA, D, tumorF) {
+        var A = [], nodes = [], tries = 0, di = Hl * 0.32, dk = D * 1.7, mg = Hl * 0.03;
+        while (A.length < nA && tries++ < nA * 20) { var q = [X0 + r() * Wl, Y0 + r() * Hl]; if (inside(q, mg) && !inTumor(q, tumorF + 0.15)) A.push(q); }
+        roots.forEach(function (p) { nodes.push({ p: p, par: -1, root: true, n: 0 }); });
+        for (var it = 0; it < 90 && A.length; it++) {
+          var acc = {}, a, j;
+          for (a = 0; a < A.length; a++) {
+            var best = -1, bd = di;
+            for (j = 0; j < nodes.length; j++) { var dd = Math.hypot(A[a][0] - nodes[j].p[0], A[a][1] - nodes[j].p[1]); if (dd < bd) { bd = dd; best = j; } }
+            if (best < 0) continue;
+            var o = acc[best] || (acc[best] = [0, 0]); o[0] += (A[a][0] - nodes[best].p[0]) / bd; o[1] += (A[a][1] - nodes[best].p[1]) / bd;
+          }
+          var grew = 0;
+          for (var key in acc) {
+            var nd = nodes[key], v = acc[key], vl = Math.hypot(v[0], v[1]);
+            if (vl < 1e-6) continue;
+            var ang = Math.atan2(v[1], v[0]) + (r() - 0.5) * 0.18, np = [nd.p[0] + Math.cos(ang) * D, nd.p[1] + Math.sin(ang) * D];
+            if (!inPoly(np, liver) || inTumor(np, tumorF)) continue;
+            var close = false;
+            for (j = 0; j < nodes.length && !close; j++) if (Math.hypot(np[0] - nodes[j].p[0], np[1] - nodes[j].p[1]) < D * 0.45) close = true;
+            if (close) continue;
+            nodes.push({ p: np, par: +key, root: false, n: 0 }); grew++;
+          }
+          if (!grew) break;
+          A = A.filter(function (q) { for (var k2 = 0; k2 < nodes.length; k2++) if (Math.hypot(q[0] - nodes[k2].p[0], q[1] - nodes[k2].p[1]) < dk) return false; return true; });
+        }
+        /* leaf counts for vessel calibre (pipe model) */
+        var kids = nodes.map(function () { return []; });
+        nodes.forEach(function (nd, j) { if (nd.par >= 0) kids[nd.par].push(j); });
+        for (j = nodes.length - 1; j >= 0; j--) { if (!kids[j].length) nodes[j].n = 1; if (nodes[j].par >= 0) nodes[nodes[j].par].n += nodes[j].n; }
+        /* chains between branch points */
+        var chains = [];
+        nodes.forEach(function (nd, j) {
+          if (nd.root) { kids[j].forEach(function (c) { walk(j, c); }); }
         });
+        function walk(from, c) {
+          var pts = [nodes[from].p, nodes[c].p], n0 = nodes[c].n;
+          while (kids[c].length === 1) { c = kids[c][0]; pts.push(nodes[c].p); }
+          chains.push({ p: pts, n: n0 });
+          kids[c].forEach(function (k3) { walk(c, k3); });
+        }
+        return chains;
+      }
+      var artRoots = [rha[3], rha[7], lha[4], lha[8], lha[12], seg2[6], seg2[10], seg3[7], seg3[12]];
+      var aCh = colonize(artRoots, 240, Hl * 0.021, 1.2);
+      function thin(pts) { if (pts.length < 5) return pts; var o = [pts[0]]; for (var j = 2; j < pts.length - 1; j += 2) o.push(pts[j]); o.push(pts[pts.length - 1]); return o; }
+      var artInk = shade(artC, -0.3);
+      aCh.forEach(function (ch) {
+        var q = Math.sqrt(ch.n), pts = NP(thin(ch.p));
+        if (ch.n >= 3) m.push({ t: 's', p: pts, w: Math.min(0.018, 0.003 * q) * Hl / 0.74, c: artC, a: 0.45, b: 0.3 });
+        line(m, P, pts, Math.min(2.4, 0.5 + 0.32 * q), Math.min(0.85, 0.5 + 0.06 * q), { wob: 0.2, c: artInk });
       });
-      /* one branch continues to normal liver: a few non-target spheres */
-      var nb = base + 1.5, NT = [J[0] + Math.cos(nb) * Rt * 0.9, J[1] + Math.sin(nb) * Rt * 0.9];
-      line(m, P, NP([J, [(J[0] + NT[0]) / 2, (J[1] + NT[1]) / 2], NT]), 0.8, 0.5);
-      normalTip = NT;
-      var spheres = [];
-      tips.forEach(function (T) { var n = 7 + ((r() * 5) | 0); for (var q = 0; q < n; q++) { var a = r() * 6.28, d = Math.sqrt(r()) * 0.025 * S; spheres.push([T[0] + Math.cos(a) * d, T[1] + Math.sin(a) * d]); } });
-      for (i = 0; i < 3; i++) { var a3 = r() * 6.28, d3 = Math.sqrt(r()) * 0.02 * S; spheres.push([normalTip[0] + Math.cos(a3) * d3, normalTip[1] + Math.sin(a3) * d3]); }
-      /* dose field: sum of short-range kernels around each sphere */
-      var G = 56, xs = [], ys = [], F = [], fmax = 0, lam = 0.03 * S;
+      var pvCh = colonize([pvR[5], pvR[10], pvR[14], pvL[5], pvL[9], pvL[12]], 110, Hl * 0.03, 1.15), pvInk = shade(P.lo[1], -0.25);
+      pvCh.forEach(function (ch) {
+        if (ch.n < 2) return;
+        line(m, P, NP(thin(ch.p)), Math.min(1.4, 0.6 + 0.14 * Math.sqrt(ch.n)), 0.45, { wob: 0.15, dash: [3, 3], c: pvInk });
+      });
+      /* microcatheter through the hepatic artery, tip in the right hepatic branch toward the tumor */
+      var tipIdx = 9, cath = haIn.slice(0, -1).concat(rha.slice(0, tipIdx + 1)), tip = rha[tipIdx];
+      line(m, P, NP(cath), 2.2, 0.85, { wob: 0.2 });
+      m.push({ t: 'e', x: tip[0] / asp, y: tip[1], rx: 0.008, ry: 0.008, rot: 0, w: 1.3, c: inkFor(P), a: 0.9 });
+      /* intratumoral arterioles and the hypervascular rim */
+      var spheres = [], clusters = [];
+      function cluster(T, n) { clusters.push(T); for (var q = 0; q < n; q++) { var a = r() * 6.28, d = Math.sqrt(r()) * 0.012 * S; spheres.push([T[0] + Math.cos(a) * d, T[1] + Math.sin(a) * d]); } }
+      function grow(p, ang, len, depth) {
+        var e = [p[0] + Math.cos(ang) * len, p[1] + Math.sin(ang) * len];
+        var th = Math.atan2(e[1] - C[1], e[0] - C[0]);
+        if (Math.hypot(e[0] - C[0], e[1] - C[1]) > trad(th) * 0.9) e = onRim(th, 0.88);
+        line(m, P, NP(wig(p, e, 0.005 * S, 10)), Math.max(0.6, 1.2 - depth * 0.25), 0.6);
+        if (depth >= 2) { cluster(e, 4 + ((r() * 4) | 0)); return; }
+        var s = 0.45 + r() * 0.35;
+        grow(e, ang - s, len * 0.72, depth + 1); grow(e, ang + s, len * 0.72, depth + 1);
+      }
+      grow(Bin, Math.atan2(C[1] - Bin[1], C[0] - Bin[0]), Rt * 0.45, 0);
+      [-1, 1].forEach(function (sg) {
+        var arc = [];
+        for (var j = 0; j <= 16; j++) arc.push(onRim(-0.15 + sg * j / 16 * 2.4, 0.86 + 0.03 * Math.sin(j * 1.7)));
+        line(m, P, NP(arc), 0.9, 0.55);
+        for (var j2 = 4; j2 <= 16; j2 += 3) cluster(arc[j2], 3 + ((r() * 4) | 0));
+      });
+      for (i = tipIdx + 1; i < rha.length; i++) { var fq = rha[i]; spheres.push([fq[0] + (r() - 0.5) * 0.008 * S, fq[1] + (r() - 0.5) * 0.008 * S]); }
+      /* dose field from the sphere positions */
+      var G = 60, xs = [], ys = [], F = [], fmax = 0, lam = Rt * 0.17;
       for (i = 0; i < G; i++) { xs.push(i / (G - 1) * asp); ys.push(i / (G - 1)); }
       for (var gy = 0; gy < G; gy++) { var row = []; for (var gx = 0; gx < G; gx++) { var s = 0; for (k = 0; k < spheres.length; k++) { var dd = Math.hypot(xs[gx] - spheres[k][0], ys[gy] - spheres[k][1]); s += Math.exp(-dd / lam); } row.push(s); if (s > fmax) fmax = s; } F.push(row); }
-      tips.forEach(function (T) { m.push({ t: 'b', x: T[0] / asp, y: T[1], r: 0.1, c: HOT[1], a: 0.35 }); m.push({ t: 'b', x: T[0] / asp, y: T[1], r: 0.05, c: HOT[0], a: 0.55 }); });
-      var mid = null;
-      [[0.12, 0.35], [0.3, 0.5], [0.6, 0.65]].forEach(function (lv) {
-        var segs = contour(F, G, xs, ys, lv[0] * fmax);
-        m.push({ t: 'k', s: segs.map(function (sg) { return [N(sg[0]), N(sg[1])]; }), w: 1, c: inkFor(P), a: lv[1] });
-        if (lv[0] === 0.12 && segs.length) { mid = segs[0][0]; segs.forEach(function (sg) { if (sg[0][0] > mid[0]) mid = sg[0]; }); }
+      clusters.forEach(function (T) { m.push({ t: 'b', x: T[0] / asp, y: T[1], r: 0.05, c: HOT[1], a: 0.3 }); });
+      var topPt = null;
+      [[0.1, 0.35], [0.25, 0.5], [0.5, 0.65]].forEach(function (lvl) {
+        var segs = contour(F, G, xs, ys, lvl[0] * fmax);
+        m.push({ t: 'k', s: segs.map(function (sg) { return [N(sg[0]), N(sg[1])]; }), w: 1, c: inkFor(P), a: lvl[1] });
+        if (lvl[0] === 0.1 && segs.length) { topPt = segs[0][0]; segs.forEach(function (sg) { if (sg[0][1] < topPt[1]) topPt = sg[0]; }); }
       });
+      line(m, P, NP(outline), 1.3, 0.75);
+      line(m, P, NP(liver), 1.6, 0.8, { wob: 0.3 });
+      spheres.forEach(function (q) { m.push({ t: 'd', x: q[0] / asp, y: q[1], r: 0.004 + r() * 0.003, c: pick(r, [HOT[3], HOT[4]]), a: 0.95 }); });
+      /* scale bar: mean beta range 2.5 mm for a tumor about 3 cm across */
+      var bar = Rt * 2 / 12, sb0 = [asp * 0.05, 0.965], sb1 = [asp * 0.05 + bar, 0.965];
+      line(m, P, NP([sb0, [(sb0[0] + sb1[0]) / 2, 0.965], sb1]), 1.6, 0.8, { poly: 1, wob: 0, pri: 2 });
+      line(m, P, NP([[sb0[0], 0.95], [sb0[0], 0.965], [sb0[0], 0.98]]), 1.2, 0.8, { poly: 1, wob: 0, pri: 2 });
+      line(m, P, NP([[sb1[0], 0.95], [sb1[0], 0.965], [sb1[0], 0.98]]), 1.2, 0.8, { poly: 1, wob: 0, pri: 2 });
+      label(m, P, '2.5 mm, mean β range', sb1[0] / asp + 0.015, 0.965, null, null, 'left', 2);
+      var lo = L(0.8, 0.15), tr = onRim(-2.3, 1), cl = clusters[0];
+      clusters.forEach(function (q) { if (q[1] > cl[1]) cl = q; });
+      label(m, P, 'liver', 0.96, 0.06, lo[0] / asp, lo[1], 'right');
+      label(m, P, 'tumor', 0.04, 0.06, tr[0] / asp, tr[1], 'left');
+      label(m, P, 'Y-90 microspheres', 0.04, 0.89, cl[0] / asp, cl[1], 'left');
+      label(m, P, 'hepatic artery', 0.96, 0.84, haIn[4][0] / asp, haIn[4][1], 'right');
+      label(m, P, 'microcatheter', 0.96, 0.93, tip[0] / asp, tip[1], 'right');
+      label(m, P, 'portal vein', 0.96, 0.6, pvL[8][0] / asp, pvL[8][1], 'right', 2);
+      if (topPt) label(m, P, 'isodose lines', 0.5, 0.06, topPt[0] / asp, topPt[1], 'center', 2);
+      return { bg: P.bg, m: m, soft: 0.22, grain: 0.11 };
+    },
+    transport: function (r, P, asp) {
+      /* Drug transport in a solid tumor with heterogeneous vasculature:
+         tortuous, leaky tumor vessels, dense at the periphery and absent from a poorly perfused necrotic core;
+         drug concentration is highest near vessels and lowest in the core; normal tissue has an orderly capillary bed */
+      var m = [], i, k, S = Math.min(asp, 1);
+      function N(p) { return [p[0] / asp, p[1]]; }
+      function NP(a) { return a.map(N); }
+      function mixc(a, b, t) { return [a[0] + (b[0] - a[0]) * t | 0, a[1] + (b[1] - a[1]) * t | 0, a[2] + (b[2] - a[2]) * t | 0]; }
+      blobs(m, r, P, 6, 0.4, 0.5);
+      var C = [asp * 0.56, 0.5], Rt = 0.3 * S, Rc = Rt * 0.32, ph1 = r() * 6.28;
+      function trad(th) { return Rt * (1 + 0.1 * Math.sin(3 * th + ph1) + 0.05 * Math.sin(5 * th)); }
+      function inside(p, f) { var th = Math.atan2(p[1] - C[1], p[0] - C[0]); return Math.hypot(p[0] - C[0], p[1] - C[1]) < trad(th) * (f || 1); }
+      /* normal capillary bed: gently curved, evenly spaced, outside the tumor */
+      var vpts = [];
+      for (i = 0; i < 9; i++) {
+        var y0 = 0.06 + i * 0.11, cap = [];
+        for (var x = -0.02; x <= asp + 0.02; x += 0.02 * asp) { var p = [x, y0 + 0.012 * Math.sin(x * 9 + i)]; if (!inside(p, 1.08)) cap.push(p); else if (cap.length > 2) { line(m, P, NP(cap), 0.8, 0.4); cap = []; } else cap = []; }
+        if (cap.length > 2) line(m, P, NP(cap), 0.8, 0.4);
+      }
+      /* tumor vessels: tortuous random walks from the rim toward (not into) the core */
+      for (i = 0; i < 14; i++) {
+        var th = i / 14 * 6.2832 + r() * 0.3, p0 = [C[0] + Math.cos(th) * trad(th) * 0.98, C[1] + Math.sin(th) * trad(th) * 0.98], path = [p0], ang = th + Math.PI + (r() - 0.5) * 0.8;
+        for (k = 0; k < 14; k++) {
+          ang += (r() - 0.5) * 1.1;
+          var q = [path[path.length - 1][0] + Math.cos(ang) * 0.018 * S, path[path.length - 1][1] + Math.sin(ang) * 0.018 * S];
+          if (Math.hypot(q[0] - C[0], q[1] - C[1]) < Rc * 1.15 || !inside(q, 0.99)) break;
+          path.push(q);
+        }
+        if (path.length > 3) { line(m, P, NP(path), 1.1, 0.6); path.forEach(function (q) { vpts.push(q); }); }
+      }
+      /* concentration field painted from distance to tumor vessels */
+      var lam = 0.05 * S, NX = 26, NY = 20, cmax = 0, cells = [];
+      for (var a = 0; a < NX; a++) for (var b = 0; b < NY; b++) {
+        var q2 = [C[0] + (a / (NX - 1) - 0.5) * 2.3 * Rt, C[1] + (b / (NY - 1) - 0.5) * 2.3 * Rt];
+        if (!inside(q2, 1.02)) continue;
+        var s = 0; for (k = 0; k < vpts.length; k += 2) s += Math.exp(-Math.hypot(q2[0] - vpts[k][0], q2[1] - vpts[k][1]) / lam);
+        cells.push([q2, s]); if (s > cmax) cmax = s;
+      }
+      cells.forEach(function (c) { var t = Math.min(1, c[1] / (cmax * 0.7)); m.push({ t: 'b', x: c[0][0] / asp, y: c[0][1], r: 0.06, c: mixc(P.hi[0], HOT[3], t), a: 0.5 }); });
+      /* necrotic core: hatched */
+      var segs = [];
+      for (var c0 = -2 * Rc; c0 <= 2 * Rc; c0 += 0.014 * S) {
+        /* lines x - y = c0 relative to the core center, clipped to the circle */
+        var disc = 2 * Rc * Rc - c0 * c0; if (disc <= 0) continue;
+        var xa = (c0 - Math.sqrt(disc)) / 2, xb = (c0 + Math.sqrt(disc)) / 2;
+        segs.push([N([C[0] + xa, C[1] + xa - c0]), N([C[0] + xb, C[1] + xb - c0])]);
+      }
+      m.push({ t: 'k', s: segs, w: 0.8, c: inkFor(P), a: 0.4 });
+      var core = []; for (i = 0; i <= 48; i++) { var tc = i / 48 * 6.2832; core.push([C[0] + Math.cos(tc) * Rc, C[1] + Math.sin(tc) * Rc]); }
+      line(m, P, NP(core), 0.9, 0.55, { dash: [3, 3] });
+      var outline = []; for (i = 0; i <= 72; i++) { var to = i / 72 * 6.2832; outline.push([C[0] + Math.cos(to) * trad(to), C[1] + Math.sin(to) * trad(to)]); }
       line(m, P, NP(outline), 1.4, 0.75);
-      if (!drug) spheres.forEach(function (q) { m.push({ t: 'd', x: q[0] / asp, y: q[1], r: 0.006 + r() * 0.004, c: pick(r, [HOT[3], HOT[4]]), a: 0.95 }); });
-      else tips.concat([normalTip]).forEach(function (T) { m.push({ t: 'e', x: T[0] / asp, y: T[1], rx: 0.012, ry: 0.012, rot: 0, w: 1, c: inkFor(P), a: 0.7, dash: [2, 2] }); });
-      var to = [C[0] + Math.cos(-0.9) * trad(-0.9), C[1] + Math.sin(-0.9) * trad(-0.9)];
-      label(m, P, 'tumor', 0.95, 0.07, to[0] / asp, to[1], 'right');
-      label(m, P, 'feeding artery', 0.04, 0.8, main[6][0] / asp, main[6][1], 'left');
-      label(m, P, drug ? 'leaky vessels' : 'microspheres', 0.04, 0.08, tips[0][0] / asp, tips[0][1], 'left');
-      if (mid) label(m, P, drug ? 'concentration contours' : 'isodose lines', 0.95, Math.min(0.94, mid[1] + 0.25), mid[0] / asp, mid[1], 'right');
+      var rimP = [C[0] + Math.cos(-0.7) * trad(-0.7), C[1] + Math.sin(-0.7) * trad(-0.7)], vp = vpts[Math.floor(vpts.length / 3)] || C;
+      label(m, P, 'tumor', 0.96, 0.06, rimP[0] / asp, rimP[1], 'right');
+      label(m, P, 'necrotic core', 0.04, 0.06, (C[0] - Rc * 0.5) / asp, C[1] - Rc * 0.5, 'left');
+      label(m, P, 'tortuous tumor vessels', 0.04, 0.95, vp[0] / asp, vp[1], 'left');
+      label(m, P, 'normal capillaries', 0.96, 0.95, null, null, 'right', 2);
+      label(m, P, 'drug concentration', 0.96, 0.5, (C[0] + Rt * 0.6) / asp, C[1] + 0.02, 'right', 2);
       return { bg: P.bg, m: m, soft: 0.22, grain: 0.11 };
     },
     tree: function (r, P, asp) {
@@ -686,6 +844,7 @@
   }
   function detailPass(c, m, W, H, d, r, small) {
     var S = Math.min(W, H), asp = W / H, i;
+    if (m.pri === 2 && S < 360 * d) return;
     c.setLineDash([]);
     if (m.t === 's' && m.b) {
       var n = Math.max(3, Math.min(14, Math.round(m.w * S / (3 * d))));
