@@ -25,7 +25,7 @@ description: "Teaching experience of Erfan Taatizadeh at the University of Briti
       {% assign items = site.teaching | sort: "date" | reverse %}
       {% for t in items %}
       <a class="pcard reveal" href="{{ t.url | relative_url }}">
-        <div class="c-art"><canvas class="art" data-art="waves" data-seed="{{ forloop.index | plus: 4 }}" data-pal="{% cycle 'dusk', 'peach' %}" aria-hidden="true"></canvas></div>
+        <div class="c-art"><canvas class="art" data-art="hero" data-seed="{{ forloop.index | plus: 4 }}" data-pal="{% cycle 'dusk', 'peach' %}" aria-hidden="true"></canvas></div>
         <div class="c-body">
           <span class="mono">{{ t.type }}{% if t.period %} · {{ t.period }}{% endif %}</span>
           <h3>{{ t.title }}</h3>
