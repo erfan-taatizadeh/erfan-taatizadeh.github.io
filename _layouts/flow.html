@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<script>document.documentElement.classList.add('js');</script>
+<script>document.documentElement.classList.add('js');try{if(localStorage.getItem('et-palette')==='blue')document.documentElement.setAttribute('data-theme','blue')}catch(e){}</script>
 {%- if page.url == "/" -%}
 {%- assign ptitle = site.name | append: " · Scientific ML for medicine" -%}
 {%- else -%}
@@ -79,6 +79,7 @@
     {%- endfor %}
   </nav>
   <div class="nav-r">
+    <div class="theme-sw" role="group" aria-label="Colour theme"><button type="button" data-set-theme="rose" aria-pressed="true" aria-label="Rose theme" title="Rose"><i style="--c:#C47A6A"></i></button><button type="button" data-set-theme="blue" aria-pressed="false" aria-label="Blue theme" title="Blue"><i style="--c:#5F82AB"></i></button></div>
     <a class="nav-cta" href="mailto:{{ site.author.email }}">Get in touch <span class="ar ne" aria-hidden="true"></span></a>
     <button class="menu-btn" id="menu" type="button" aria-expanded="false" aria-controls="links"><span class="ml">Menu</span><span class="burger" aria-hidden="true"><i></i><i></i></span></button>
   </div>
