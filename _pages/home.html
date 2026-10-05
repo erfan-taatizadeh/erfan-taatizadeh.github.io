@@ -32,7 +32,7 @@ redirect_from:
 <section class="intro" id="about">
   <div class="wrap">
     <p class="eyebrow reveal">About</p>
-    <p class="statement reveal">I build physics-informed neural networks and neural operators that simulate patient-specific blood flow in seconds, so liver cancer therapy can be planned <em>faster and more precisely.</em></p>
+    <p class="statement reveal">I build physics-informed neural networks and neural operators that model patient-specific blood flow in the liver, so Y-90 radioembolization can be planned <em>faster and more precisely.</em></p>
     <div class="intro-grid">
       <ul class="facts reveal">
         <li><span class="k">Now</span><span>Postdoctoral Scholar, University of California, Davis</span></li>
@@ -42,14 +42,14 @@ redirect_from:
       </ul>
       <div class="prose reveal">
         <p>I'm a Postdoctoral Scholar in Biomedical Engineering and Radiology at UC Davis. I study how blood moves through the hepatic arteries, because in Y-90 radioembolization, a targeted liver cancer therapy, where the flow goes is where the treatment goes.</p>
-        <p>Over seven years I've built multiphysics models in COMSOL and trained PINNs, DeepONets, and geometry-aware neural operators with PyTorch, DeepXDE, and NVIDIA PhysicsNeMo, validating them against finite-element simulation and laboratory experiments.</p>
+        <p>Across more than seven years of research I've built multiphysics models in COMSOL, and more recently trained PINNs, DeepONets, and geometry-aware neural operators with PyTorch, DeepXDE, and NVIDIA PhysicsNeMo, validating them against finite-element simulation and, where possible, laboratory experiments.</p>
         <a class="btn" href="{{ '/research/' | relative_url }}">More about my research <span class="ar" aria-hidden="true"></span></a>
       </div>
     </div>
     <dl class="stats reveal">
-      <div><dt>Publications</dt><dd data-count="16">16</dd></div>
+      <div><dt>Publications, including theses</dt><dd data-count="16">16</dd></div>
       <div><dt>First-author papers and theses</dt><dd data-count="6">6</dd></div>
-      <div><dt>Years in CFD and ML</dt><dd data-count="7" data-suffix="+">7+</dd></div>
+      <div><dt>Years in R&amp;D and modeling</dt><dd data-count="7" data-suffix="+">7+</dd></div>
       <div><dt>Students taught</dt><dd data-count="500" data-suffix="+">500+</dd></div>
     </dl>
   </div>
@@ -64,12 +64,12 @@ redirect_from:
       <a class="row reveal" href="{{ '/research/' | relative_url }}#pinns">
         <div class="row-k"><canvas class="art" data-art="icon" data-motif="stream" data-seed="3" data-pal="rose" aria-hidden="true"></canvas><span class="mono">01 · Flow</span></div>
         <h3 class="row-t">Physics-informed neural networks</h3>
-        <div class="row-d"><p>Navier–Stokes solved directly on patient-specific hepatic arteries and validated against CFD.</p><span class="btn">Learn more <span class="ar" aria-hidden="true"></span></span></div>
+        <div class="row-d"><p>Navier–Stokes solved on a patient-specific hepatic arterial tree with 46 outlets, validated against COMSOL CFD.</p><span class="btn">Learn more <span class="ar" aria-hidden="true"></span></span></div>
       </a>
       <a class="row reveal" href="{{ '/research/' | relative_url }}#operators">
         <div class="row-k"><canvas class="art" data-art="icon" data-motif="grid" data-seed="7" data-pal="blue" aria-hidden="true"></canvas><span class="mono">02 · Surrogates</span></div>
         <h3 class="row-t">Geometry-aware neural operators</h3>
-        <div class="row-d"><p>Surrogates that predict flow in new vessel shapes in seconds instead of hours.</p><span class="btn">Learn more <span class="ar" aria-hidden="true"></span></span></div>
+        <div class="row-d"><p>Surrogates that predict 3D flow and pressure from a vessel surface mesh in a single forward pass, with no new CFD solve.</p><span class="btn">Learn more <span class="ar" aria-hidden="true"></span></span></div>
       </a>
       <a class="row reveal" href="{{ '/portfolio/' | relative_url }}">
         <div class="row-k"><canvas class="art" data-art="icon" data-motif="dose" data-seed="5" data-pal="peach" aria-hidden="true"></canvas><span class="mono">03 · Therapy</span></div>
@@ -105,8 +105,8 @@ redirect_from:
         <div class="v-r">
           <div class="v-text on"><span class="mono">Method</span><p>Models that respect conservation laws need less data, generalize better to new anatomy, and fail in ways we can reason about. The physics lives in the loss, the architecture, or both.</p></div>
           <div class="v-text" aria-hidden="true"><span class="mono">Data</span><p>No two hepatic arterial trees are alike. Simulations should start from the patient's own imaging rather than an average anatomy, because the flow split decides where the treatment goes.</p></div>
-          <div class="v-text" aria-hidden="true"><span class="mono">Speed</span><p>A treatment plan cannot wait hours for a CFD solve. Neural surrogates bring flow predictions down to seconds, so planning can become interactive.</p></div>
-          <div class="v-text" aria-hidden="true"><span class="mono">Trust</span><p>Every surrogate is checked against finite-element simulation and, where possible, laboratory experiments, so speed never comes at the cost of trust.</p></div>
+          <div class="v-text" aria-hidden="true"><span class="mono">Speed</span><p>Repeating a full CFD solve for every patient and catheter position is slow. Neural surrogates aim to replace it with a single network evaluation, so planning can become interactive.</p></div>
+          <div class="v-text" aria-hidden="true"><span class="mono">Trust</span><p>Surrogates are checked against finite-element simulation and, where possible, laboratory experiments, and their open gaps are reported, so speed never comes at the cost of trust.</p></div>
         </div>
         <p class="v-count"><b>01</b> / 04</p>
       </div>
